@@ -14,9 +14,13 @@ func main() {
 	fmt.Println("****************")
 
 	// TODO(guitarbum722) create default current tablature for multiple instruments 2017-04-02T18:54 4
-	var current = []string{"---", "---", "---", "---", "---", "---"}
+	// TODO(guitarbum722) create instrument interface and instrument structs 2017-04-03T18:54 4
+	var current = map[rune]string{'E': "---", 'a': "---", 'd': "---", 'g': "---", 'b': "---", 'e': "---"}
+	for k, v := range current {
+		fmt.Printf("%s : %s\n", string(k), v)
+	}
 
-	fmt.Println(strings.Join(current, "\n"))
+	fmt.Println(current)
 	for {
 		input, _ := reader.ReadString('\n')
 		input = strings.Replace(input, "\n", "", -1) // Windows; BOOO!
@@ -27,6 +31,6 @@ func main() {
 		}
 
 		// TODO(guitarbum722) parse input and reconstruct the values of current for display 2017-04-02T18:54 4
-		fmt.Println(strings.Join(current, "\n"))
+		fmt.Println(current)
 	}
 }
