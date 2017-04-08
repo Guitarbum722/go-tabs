@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+// TODO(guitarbum722) put instruments in instruments.go and create methods on them 2017-04-06T18:00 5
+// TODO(guitarbum722) define structure that will display the instrument map in order 2017-04-06T18:00 5
 var currentTab = map[byte]string{'E': "---", 'a': "---", 'd': "---", 'g': "---", 'b': "---", 'e': "---"}
 
 func main() {
