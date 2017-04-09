@@ -1,4 +1,4 @@
-package main
+package instrument
 
 // Instrument defines behavior that is common across the instruments used in this package, such as setting the tuning.
 type Instrument interface {
