@@ -11,30 +11,26 @@ import (
 // TODO(guitarbum722) define structure that will display the instrument map in order 2017-04-06T18:00 5
 
 func main() {
-	instrument := instrument.NewInstrument("guitar")
+	player := instrument.NewInstrument("guitar")
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Enter the string, then fret number (ie e7 or g2)")
 	fmt.Println("****************")
 
-	orderOfStrings := instrument.Order()
-	fretBoard := instrument.Fretboard()
-	for _, v := range orderOfStrings {
-		fmt.Printf("%s : %s\n", string(v), fretBoard[v])
-	}
+	//orderOfStrings := player.Order()
+	//fretBoard := player.Fretboard()
 
+	fmt.Print(instrument.StringifyCurrentTab(player))
 	for {
 		input, _ := reader.ReadString('\n')
 		input = strings.Replace(input, "\n", "", -1) // Windows; BOOO!
 
 		guitarString, fret := parseFingerBoard(input)
 
-		fretBoard[guitarString] = fmt.Sprintf("-%s-", fret)
+		instrument.UpdateCurrentTab(player, guitarString, fret)
 
-		// TODO(guitarbum722) parse input and reconstruct the values of currentTab for display 2017-04-02T18:54 4
-		for _, v := range orderOfStrings {
-			fmt.Printf("%s : %s\n", string(v), fretBoard[v])
-		}
+		fmt.Print(instrument.StringifyCurrentTab(player))
+
 	}
 }
 

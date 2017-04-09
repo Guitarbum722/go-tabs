@@ -1,5 +1,9 @@
 package instrument
 
+import (
+	"fmt"
+)
+
 const testVersion = 1
 
 // Instrument defines behavior that is common across the instruments used in this package, such as setting the tuning.
@@ -107,4 +111,20 @@ func newBass() *Bass {
 		order:        TuningOrder{'E', 'a', 'd', 'g'},
 		numOfStrings: 4,
 	}
+}
+
+// StringifyCurrentTab converts the current fretBoard configuration to a string.
+func StringifyCurrentTab(i Instrument) string {
+	orderOfStrings := i.Order()
+	fretBoard := i.Fretboard()
+	var result string
+	for _, v := range orderOfStrings {
+		result += fmt.Sprintf("%s : %s\n", string(v), fretBoard[v])
+	}
+	return result
+}
+
+// UpdateCurrentTab accepts the guitarString and fret to be updated on the Instrument.
+func UpdateCurrentTab(i Instrument, guitarString byte, fret string) {
+	i.Fretboard()[guitarString] = fmt.Sprintf("-%s-", fret)
 }
