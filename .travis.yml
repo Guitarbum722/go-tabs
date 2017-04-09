@@ -1,0 +1,14 @@
+language: go
+
+go:
+  - 1.8.x
+
+notifications:
+  email:
+    recipients:
+      - johnkenneth.moore@gmail.com
+    on_success: never
+    on_failure: always 
+
+script:
+  - go test -v ./instrument
