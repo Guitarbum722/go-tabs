@@ -12,13 +12,12 @@ import (
 
 func main() {
 	player := instrument.NewInstrument("guitar")
+	err := player.Tune("Eadgbe")
+	fmt.Println(err)
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Enter the string, then fret number (ie e7 or g2)")
 	fmt.Println("****************")
-
-	//orderOfStrings := player.Order()
-	//fretBoard := player.Fretboard()
 
 	fmt.Print(instrument.StringifyCurrentTab(player))
 	for {

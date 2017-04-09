@@ -32,3 +32,12 @@ func TestNewInstrument(t *testing.T) {
 		}
 	}
 }
+
+func TestTune(t *testing.T) {
+	for _, tt := range tuneCases {
+		got := NewInstrument(tt.input)
+		if err := got.Tune(tt.newTuning); (err != nil) != tt.wantErr {
+			t.Fatalf("Tune(%q) error = %v, wantErr %v", tt.newTuning, err, tt.wantErr)
+		}
+	}
+}

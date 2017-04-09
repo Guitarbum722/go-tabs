@@ -39,3 +39,20 @@ var newInstrumentCases = []struct {
 			numOfStrings: 6},
 	},
 }
+
+var tuneCases = []struct {
+	input     string
+	newTuning string
+	wantErr   bool
+}{
+	{
+		"guitar",
+		"Dadgbe",
+		false,
+	},
+	{
+		"bass",
+		"Dadgb",
+		true,
+	},
+}
