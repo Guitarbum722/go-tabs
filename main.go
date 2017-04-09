@@ -8,12 +8,11 @@ import (
 	"strings"
 )
 
-// TODO(guitarbum722) define structure that will display the instrument map in order 2017-04-06T18:00 5
-
 func main() {
 	player := instrument.NewInstrument("guitar")
-	err := player.Tune("Eadgbe")
+	err := player.Tune("Dadgbe")
 	fmt.Println(err)
+	fmt.Println(player.Order())
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Enter the string, then fret number (ie e7 or g2)")

@@ -68,6 +68,13 @@ func (g *Guitar) Tune(tuning string) error {
 			g.NumOfStrings())
 		return errors.New(errMsg)
 	}
+	for k := range g.fretBoard {
+		delete(g.fretBoard, k)
+	}
+	for _, v := range tuning {
+		g.fretBoard[byte(v)] = "---"
+	}
+	g.order = TuningOrder(tuning)
 	return nil
 }
 
