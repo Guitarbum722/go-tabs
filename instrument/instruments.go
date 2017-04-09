@@ -1,25 +1,30 @@
 package instrument
 
+const testVersion = 1
+
 // Instrument defines behavior that is common across the instruments used in this package, such as setting the tuning.
 type Instrument interface {
 	Tune(tuning string)
-	Fretboard() map[byte]string
+	Fretboard() Fretboard
 	Order() TuningOrder
 }
 
 // TuningOrder defines the order in which the strings would be physically on the guitar.  TuningOrder can be used to display the strings properly and consistently.
 type TuningOrder []byte
 
+// Fretboard represents the string/fretnumber relationship that is a single note or an entire chord.
+type Fretboard map[byte]string
+
 // Guitar represents a standard 6 string guitar with a default tuning of Eadgbe.  Tuning can be changed by calling Tune()
 type Guitar struct {
-	fretBoard    map[byte]string
+	fretBoard    Fretboard
 	order        TuningOrder
 	numOfStrings int
 }
 
 // Bass represents a standard 4 string bass guitar with a default tuning of Eadg.  Tuning can be changed by calling Tune()
 type Bass struct {
-	fretBoard    map[byte]string
+	fretBoard    Fretboard
 	order        TuningOrder
 	numOfStrings int
 }
@@ -46,7 +51,7 @@ func (g *Guitar) Tune(tuning string) {
 }
 
 // Fretboard returns the current map which represents the Guitar pointers tuning.
-func (g *Guitar) Fretboard() map[byte]string {
+func (g *Guitar) Fretboard() Fretboard {
 	return g.fretBoard
 }
 
@@ -61,7 +66,7 @@ func (g *Guitar) Order() TuningOrder {
 
 // returns a pointer to a guitar with standard tuning by default.
 func newGuitar() *Guitar {
-	return &Guitar{fretBoard: map[byte]string{
+	return &Guitar{fretBoard: Fretboard{
 		'E': "---",
 		'a': "---",
 		'd': "---",
@@ -84,7 +89,7 @@ func (b *Bass) Order() TuningOrder {
 }
 
 // Fretboard returns the current map which represents the Bass pointers tuning.
-func (b *Bass) Fretboard() map[byte]string {
+func (b *Bass) Fretboard() Fretboard {
 	return b.fretBoard
 }
 
@@ -94,7 +99,7 @@ func (b *Bass) orderTuning() {
 
 // returns a pointer to a guitar with a standard tuning by default.
 func newBass() *Bass {
-	return &Bass{fretBoard: map[byte]string{
+	return &Bass{fretBoard: Fretboard{
 		'E': "---",
 		'a': "---",
 		'd': "---",
