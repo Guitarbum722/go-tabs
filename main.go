@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	player := instrument.NewInstrument("guitar")
+	player := instrument.NewInstrument("bass")
 	err := player.Tune("Dadgbe")
 	fmt.Println(err)
 	fmt.Println(player.Order())

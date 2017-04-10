@@ -41,3 +41,11 @@ func TestTune(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkNewInstrument(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		NewInstrument(newInstrumentCases[0].inputType)
+	}
+}

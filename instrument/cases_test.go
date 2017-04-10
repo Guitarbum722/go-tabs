@@ -27,6 +27,17 @@ var newInstrumentCases = []struct {
 			numOfStrings: 4},
 	},
 	{
+		"ukulele",
+		&Ukulele{fretBoard: Fretboard{
+			'G': "---",
+			'c': "---",
+			'e': "---",
+			'a': "---",
+		},
+			order:        TuningOrder{'G', 'c', 'e', 'a'},
+			numOfStrings: 4},
+	},
+	{
 		"unKnoWN",
 		&Guitar{fretBoard: Fretboard{
 			'E': "---",
@@ -53,6 +64,11 @@ var tuneCases = []struct {
 	{
 		"bass",
 		"Dadgb",
+		true,
+	},
+	{
+		"guitar",
+		"Eadgbz",
 		true,
 	},
 }

@@ -3,6 +3,7 @@ package instrument
 import (
 	"errors"
 	"fmt"
+	"reflect"
 )
 
 const testVersion = 1
@@ -29,6 +30,13 @@ type Guitar struct {
 	numOfStrings int
 }
 
+// Ukulele represents a standard 4 string ukulele with a default tuing of Gcea.  Tuning can be changed by calling Tune()
+type Ukulele struct {
+	fretBoard    Fretboard
+	order        TuningOrder
+	numOfStrings int
+}
+
 // Bass represents a standard 4 string bass guitar with a default tuning of Eadg.  Tuning can be changed by calling Tune()
 type Bass struct {
 	fretBoard    Fretboard
@@ -46,6 +54,8 @@ func NewInstrument(i string) Instrument {
 		instrument = newGuitar()
 	case "bass":
 		instrument = newBass()
+	case "ukulele":
+		instrument = newUkulele()
 	default:
 		instrument = newGuitar()
 	}
@@ -63,9 +73,7 @@ func (g *Guitar) Tune(tuning string) error {
 		}
 	}
 	if ok := validCount(g, tuning); !ok {
-		errMsg := fmt.Sprintf("attempted to reconfigure the Guitar with %d strings which does not match the allowed %d number of strings",
-			len(tuning),
-			g.NumOfStrings())
+		errMsg := tuningLengthError(g, tuning)
 		return errors.New(errMsg)
 	}
 	for k := range g.fretBoard {
@@ -78,7 +86,7 @@ func (g *Guitar) Tune(tuning string) error {
 	return nil
 }
 
-// Fretboard returns the current map which represents the Guitar pointers tuning.
+// Fretboard returns the current map which represents the Guitar pointer's tuning.
 func (g *Guitar) Fretboard() Fretboard {
 	return g.fretBoard
 }
@@ -117,9 +125,7 @@ func (b *Bass) Tune(tuning string) error {
 		}
 	}
 	if ok := validCount(b, tuning); !ok {
-		errMsg := fmt.Sprintf("attempted to reconfigure the Bass with %d strings which does not match the allowed %d number of strings",
-			len(tuning),
-			b.NumOfStrings())
+		errMsg := tuningLengthError(b, tuning)
 		return errors.New(errMsg)
 	}
 	return nil
@@ -130,7 +136,7 @@ func (b *Bass) Order() TuningOrder {
 	return b.order
 }
 
-// Fretboard returns the current map which represents the Bass pointers tuning.
+// Fretboard returns the current map which represents the Bass pointer's tuning.
 func (b *Bass) Fretboard() Fretboard {
 	return b.fretBoard
 }
@@ -150,6 +156,48 @@ func newBass() *Bass {
 		order:        TuningOrder{'E', 'a', 'd', 'g'},
 		numOfStrings: 4,
 	}
+}
+
+func newUkulele() *Ukulele {
+	return &Ukulele{fretBoard: Fretboard{
+		'G': "---",
+		'c': "---",
+		'e': "---",
+		'a': "---"},
+		order:        TuningOrder{'G', 'c', 'e', 'a'},
+		numOfStrings: 4,
+	}
+}
+
+// Tune updates the tuning configuration of the current Ukulele.  The order of the strings will also be the order in which the
+// tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
+// as the count of the input.
+func (u *Ukulele) Tune(tuning string) error {
+	for _, v := range tuning {
+		if ok := validMusicNote(v); !ok {
+			return errors.New("one or more of the note provided in the requested tuning is invalid")
+		}
+	}
+	if ok := validCount(u, tuning); !ok {
+		errMsg := tuningLengthError(u, tuning)
+		return errors.New(errMsg)
+	}
+	return nil
+}
+
+// Fretboard returns the current map which represents the Ululele pointer's tuning.
+func (u *Ukulele) Fretboard() Fretboard {
+	return u.fretBoard
+}
+
+// NumOfStrings returns the number of strings that the instrument has.
+func (u *Ukulele) NumOfStrings() int {
+	return u.numOfStrings
+}
+
+// Order returns the current tuning order for the current Ukulele
+func (u *Ukulele) Order() TuningOrder {
+	return u.order
 }
 
 // StringifyCurrentTab converts the current fretBoard configuration to a string.
@@ -174,4 +222,11 @@ func validMusicNote(note rune) bool {
 
 func validCount(i Instrument, s string) bool {
 	return i.NumOfStrings() == len(s)
+}
+
+func tuningLengthError(i Instrument, tuning string) string {
+	return fmt.Sprintf("attempted to reconfigure the %s with %d strings which does not match the allowed %d number of strings",
+		reflect.TypeOf(i),
+		len(tuning),
+		i.NumOfStrings())
 }
