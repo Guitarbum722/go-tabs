@@ -230,3 +230,54 @@ func tuningLengthError(i Instrument, tuning string) string {
 		len(tuning),
 		i.NumOfStrings())
 }
+
+// ParseFingerBoard validates input for the next tab fingering, validates it and returns the parsed values.
+func ParseFingerBoard(i string) (byte, string, error) {
+
+	var guitarString byte
+
+	// Guitar string number plus frets should not be less than 2 and not more than 3 characters in length.  This allots for up to 99 frets.
+	if len(i) < 2 || len(i) > 3 {
+		return 0, "-", errors.New("Invalid entry: make sure the format is [string#][fret#]")
+	}
+
+	if !validMusicNote(rune(i[0])) {
+		return 0, "-", errors.New("invalid entry: make sure the string is a valid music note")
+	}
+
+	// confirms that the string input by the user is valid
+	switch i[0] {
+	case 'A':
+		guitarString = i[0]
+	case 'B':
+		guitarString = i[0]
+	case 'C':
+		guitarString = i[0]
+	case 'D':
+		guitarString = i[0]
+	case 'E':
+		guitarString = i[0]
+	case 'F':
+		guitarString = i[0]
+	case 'G':
+		guitarString = i[0]
+	case 'a':
+		guitarString = i[0]
+	case 'b':
+		guitarString = i[0]
+	case 'c':
+		guitarString = i[0]
+	case 'd':
+		guitarString = i[0]
+	case 'e':
+		guitarString = i[0]
+	case 'f':
+		guitarString = i[0]
+	case 'g':
+		guitarString = i[0]
+	}
+
+	fret := i[1:]
+
+	return guitarString, fret, nil
+}
