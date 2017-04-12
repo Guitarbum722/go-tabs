@@ -247,15 +247,15 @@ func ParseFingerBoard(i string) (byte, string, error) {
 	var guitarString byte
 
 	// Guitar string number plus frets should not be less than 2 and not more than 3 characters in length.  This allots for up to 99 frets.
-	if len(i) < 2 || len(i) > 3 {
-		return 0, "-", errors.New("Invalid entry: make sure the format is [string#][fret#]")
+	if len(i) < 2 || len(i) > 4 {
+		return 0, "-", errors.New("invalid entry: make sure the format is [string#][fret#] and the fret number is <= 999")
 	}
 
 	if !validMusicNote(rune(i[0])) {
 		return 0, "-", errors.New("invalid entry: make sure the string is a valid music note")
 	}
 
-	if !validFretCount(i) {
+	if !validFretCount(i[1:]) {
 		return 0, "-", errors.New("invalid entry: make sure the fret number is numeric")
 	}
 
