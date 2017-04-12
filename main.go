@@ -1,9 +1,12 @@
+// This will be the command line app that uses the tablature/instrument package api.
+// It is a WIP and is not yet intended for use.
 package main
 
 import (
 	"bufio"
 	"fmt"
 	"github.com/Guitarbum722/tablature/instrument"
+	"log"
 	"os"
 	"strings"
 )
@@ -11,8 +14,9 @@ import (
 func main() {
 	var player instrument.Instrument = instrument.NewInstrument("guitar")
 	err := player.Tune("Dadgbe")
-	fmt.Println(err)
-	fmt.Println(player.Order())
+	if err != nil {
+		log.Fatal("error tuning guitar")
+	}
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Enter the string, then fret number (ie e7 or g2)")
@@ -24,7 +28,9 @@ func main() {
 		input = strings.Replace(input, "\n", "", -1) // Windows; BOOO!
 
 		guitarString, fret, err := instrument.ParseFingerBoard(input)
-		if err == nil {
+		if err != nil {
+			log.Printf("invalid entry: %s", err)
+		} else {
 			instrument.UpdateCurrentTab(player, guitarString, fret)
 		}
 
@@ -32,52 +38,3 @@ func main() {
 
 	}
 }
-
-// func parseFingerBoard(i string) (byte, string) {
-
-// 	var guitarString byte
-// 	var fret string
-
-// 	// Guitar string number plus frets should not be less than 2 and not more than 3 characters in length.  This allots for up to 99 frets.
-// 	if len(i) < 2 || len(i) > 3 {
-// 		fmt.Println("Invalid entry; make sure the format is [string#][fret#]")
-// 	}
-
-// 	if instrument.validMusicNote(input string)
-
-// 	// confirms that the string input by the user is valid
-// 	switch i[0] {
-// 	case 'A':
-// 		guitarString = i[0]
-// 	case 'B':
-// 		guitarString = i[0]
-// 	case 'C':
-// 		guitarString = i[0]
-// 	case 'D':
-// 		guitarString = i[0]
-// 	case 'E':
-// 		guitarString = i[0]
-// 	case 'F':
-// 		guitarString = i[0]
-// 	case 'G':
-// 		guitarString = i[0]
-// 	case 'a':
-// 		guitarString = i[0]
-// 	case 'b':
-// 		guitarString = i[0]
-// 	case 'c':
-// 		guitarString = i[0]
-// 	case 'd':
-// 		guitarString = i[0]
-// 	case 'e':
-// 		guitarString = i[0]
-// 	case 'f':
-// 		guitarString = i[0]
-// 	case 'g':
-// 		guitarString = i[0]
-// 	}
-
-// 	fret = i[1:]
-
-// 	return guitarString, fret
-// }
