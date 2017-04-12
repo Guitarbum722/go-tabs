@@ -224,6 +224,16 @@ func validCount(i Instrument, s string) bool {
 	return i.NumOfStrings() == len(s)
 }
 
+// validates that the fret number is numeric
+func validFretCount(s string) bool {
+	for _, v := range s {
+		if v < '0' || v > '9' {
+			return false
+		}
+	}
+	return true
+}
+
 func tuningLengthError(i Instrument, tuning string) string {
 	return fmt.Sprintf("attempted to reconfigure the %s with %d strings which does not match the allowed %d number of strings",
 		reflect.TypeOf(i),
@@ -243,6 +253,10 @@ func ParseFingerBoard(i string) (byte, string, error) {
 
 	if !validMusicNote(rune(i[0])) {
 		return 0, "-", errors.New("invalid entry: make sure the string is a valid music note")
+	}
+
+	if !validFretCount(i) {
+		return 0, "-", errors.New("invalid entry: make sure the fret number is numeric")
 	}
 
 	// confirms that the string input by the user is valid
