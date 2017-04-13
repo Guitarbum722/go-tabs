@@ -213,7 +213,18 @@ func StringifyCurrentTab(i Instrument) string {
 
 // UpdateCurrentTab accepts the guitarString and fret to be updated on the Instrument.
 func UpdateCurrentTab(i Instrument, instrumentString byte, fret string) {
-	i.Fretboard()[instrumentString] = fmt.Sprintf("-%s-", fret)
+	switch len(fret) {
+	case 1:
+		if fret == "0" {
+			i.Fretboard()[instrumentString] = fmt.Sprintf("--%s", "-")
+		} else {
+			i.Fretboard()[instrumentString] = fmt.Sprintf("--%s", fret)
+		}
+	case 2:
+		i.Fretboard()[instrumentString] = fmt.Sprintf("-%s", fret)
+	case 3:
+		i.Fretboard()[instrumentString] = fmt.Sprintf("%s", fret)
+	}
 }
 
 func validMusicNote(note rune) bool {
