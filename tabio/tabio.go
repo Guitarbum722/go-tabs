@@ -29,7 +29,6 @@ func StageTablature(i instrument.Instrument, w *TablatureWriter) error {
 		errMsg := fmt.Sprintf("there was an error writing to the bufferred writer: %s", err)
 		return errors.New(errMsg)
 	}
-	// w.Flush()
 	return nil
 }
 
