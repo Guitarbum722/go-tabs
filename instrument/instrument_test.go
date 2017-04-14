@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-const targetTestVersion = 1
+const targetTestVersion = 2
 
 func TestTestVersion(t *testing.T) {
 	if testVersion != targetTestVersion {
@@ -38,6 +38,14 @@ func TestTune(t *testing.T) {
 		got := NewInstrument(tt.input)
 		if err := got.Tune(tt.newTuning); (err != nil) != tt.wantErr {
 			t.Fatalf("Tune(%q) error = %v, wantErr %v", tt.newTuning, err, tt.wantErr)
+		}
+	}
+}
+
+func TestParseFingerBoard(t *testing.T) {
+	for _, tt := range parseFingerBoardCases {
+		if _, _, err := ParseFingerBoard(tt.input); (err != nil) != tt.wantErr {
+			t.Fatalf("ParseFingerBoard(%q) error = %v, wantErr %v", tt.input, err, tt.wantErr)
 		}
 	}
 }
