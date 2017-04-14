@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-const testVersion = 1
+const testVersion = 2
 
 // Instrument defines behavior that is common across the instruments used in this package, such as setting the tuning.
 type Instrument interface {
@@ -255,7 +255,7 @@ func tuningLengthError(i Instrument, tuning string) string {
 // ParseFingerBoard validates input for the next tab fingering, validates it and returns the parsed values.
 func ParseFingerBoard(i string) (byte, string, error) {
 
-	var guitarString byte
+	var instrumentString byte
 
 	// Guitar string number plus frets should not be less than 2 and not more than 3 characters in length.  This allots for up to 99 frets.
 	if len(i) < 2 || len(i) > 4 {
@@ -273,36 +273,36 @@ func ParseFingerBoard(i string) (byte, string, error) {
 	// confirms that the string input by the user is valid
 	switch i[0] {
 	case 'A':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'B':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'C':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'D':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'E':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'F':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'G':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'a':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'b':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'c':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'd':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'e':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'f':
-		guitarString = i[0]
+		instrumentString = i[0]
 	case 'g':
-		guitarString = i[0]
+		instrumentString = i[0]
 	}
 
 	fret := i[1:]
 
-	return guitarString, fret, nil
+	return instrumentString, fret, nil
 }
