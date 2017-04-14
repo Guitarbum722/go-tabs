@@ -30,7 +30,7 @@ type Guitar struct {
 	numOfStrings int
 }
 
-// Ukulele represents a standard 4 string ukulele with a default tuing of Gcea.  Tuning can be changed by calling Tune()
+// Ukulele represents a standard 4 string ukulele with a default tuning of Gcea.  Tuning can be changed by calling Tune()
 type Ukulele struct {
 	fretBoard    Fretboard
 	order        TuningOrder
