@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/Guitarbum722/tablature/instrument"
+	"github.com/Guitarbum722/tablature/tabio"
 	"log"
 	"os"
 	"strings"
@@ -21,20 +22,34 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Enter the string, then fret number (ie e7 or g2)")
 	fmt.Println("****************")
-
 	fmt.Print(instrument.StringifyCurrentTab(player))
+
+	w := tabio.NewTablatureWriter(os.Stdout)
+
 	for {
 		input, _ := reader.ReadString('\n')
 		input = strings.Replace(input, "\n", "", -1) // Windows; BOOO!
 
-		guitarString, fret, err := instrument.ParseFingerBoard(input)
-		if err != nil {
-			log.Printf("invalid entry: %s", err)
-		} else {
-			instrument.UpdateCurrentTab(player, guitarString, fret)
+		switch input {
+		case "stage":
+			tabio.StageTablature(player, w)
+			for k := range player.Fretboard() {
+				instrument.UpdateCurrentTab(player, k, "-")
+			}
+			fmt.Print(instrument.StringifyCurrentTab(player))
+		case "export":
+			tabio.ExportTablature(w)
+			for k := range player.Fretboard() {
+				instrument.UpdateCurrentTab(player, k, "-")
+			}
+		default:
+			guitarString, fret, err := instrument.ParseFingerBoard(input)
+			if err != nil {
+				log.Printf("invalid entry: %s", err)
+			} else {
+				instrument.UpdateCurrentTab(player, guitarString, fret)
+			}
+			fmt.Print(instrument.StringifyCurrentTab(player))
 		}
-
-		fmt.Print(instrument.StringifyCurrentTab(player))
-
 	}
 }
