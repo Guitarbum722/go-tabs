@@ -50,6 +50,14 @@ func TestParseFingerBoard(t *testing.T) {
 	}
 }
 
+func BenchmarkParseFingerBoard(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		ParseFingerBoard(parseFingerBoardCases[0].input)
+	}
+}
+
 func BenchmarkNewInstrument(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
