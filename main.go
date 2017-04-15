@@ -14,17 +14,17 @@ import (
 
 func main() {
 	var player instrument.Instrument = instrument.NewInstrument("guitar")
-	err := player.Tune("Dadgbe")
-	if err != nil {
-		log.Fatal("error tuning guitar")
-	}
+	// err := player.Tune("Dadgbe")
+	// if err != nil {
+	// 	log.Fatal("error tuning guitar")
+	// }
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Enter the string, then fret number (ie e7 or g2)")
 	fmt.Println("****************")
 	fmt.Print(instrument.StringifyCurrentTab(player))
 
-	w := tabio.NewTablatureWriter(os.Stdout)
+	w := tabio.NewTablatureWriter(os.Stdout, 20)
 
 	for {
 		input, _ := reader.ReadString('\n')
@@ -38,7 +38,9 @@ func main() {
 			}
 			fmt.Print(instrument.StringifyCurrentTab(player))
 		case "export":
-			tabio.ExportTablature(w)
+			if err := tabio.ExportTablature(player, w); err != nil {
+				log.Fatalf("there was an error exporting the tablature::: %s\n", err)
+			}
 			for k := range player.Fretboard() {
 				instrument.UpdateCurrentTab(player, k, "-")
 			}
