@@ -110,7 +110,7 @@ func newGuitar() *Guitar {
 		'g': "---",
 		'b': "---",
 		'e': "---"},
-		order:        TuningOrder{'E', 'a', 'd', 'g', 'b', 'e'},
+		order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E'},
 		numOfStrings: 6,
 	}
 }
@@ -153,7 +153,7 @@ func newBass() *Bass {
 		'a': "---",
 		'd': "---",
 		'g': "---"},
-		order:        TuningOrder{'E', 'a', 'd', 'g'},
+		order:        TuningOrder{'g', 'd', 'a', 'E'},
 		numOfStrings: 4,
 	}
 }
@@ -164,7 +164,7 @@ func newUkulele() *Ukulele {
 		'c': "---",
 		'e': "---",
 		'a': "---"},
-		order:        TuningOrder{'G', 'c', 'e', 'a'},
+		order:        TuningOrder{'a', 'e', 'c', 'G'},
 		numOfStrings: 4,
 	}
 }
