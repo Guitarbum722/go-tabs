@@ -13,7 +13,7 @@ var newInstrumentCases = []struct {
 			'g': "---",
 			'b': "---",
 			'e': "---"},
-			order:        TuningOrder{'E', 'a', 'd', 'g', 'b', 'e'},
+			order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E'},
 			numOfStrings: 6},
 	},
 	{
@@ -23,7 +23,7 @@ var newInstrumentCases = []struct {
 			'a': "---",
 			'd': "---",
 			'g': "---"},
-			order:        TuningOrder{'E', 'a', 'd', 'g'},
+			order:        TuningOrder{'g', 'd', 'a', 'E'},
 			numOfStrings: 4},
 	},
 	{
@@ -34,7 +34,7 @@ var newInstrumentCases = []struct {
 			'e': "---",
 			'a': "---",
 		},
-			order:        TuningOrder{'G', 'c', 'e', 'a'},
+			order:        TuningOrder{'a', 'e', 'c', 'G'},
 			numOfStrings: 4},
 	},
 	{
@@ -46,7 +46,7 @@ var newInstrumentCases = []struct {
 			'g': "---",
 			'b': "---",
 			'e': "---"},
-			order:        TuningOrder{'E', 'a', 'd', 'g', 'b', 'e'},
+			order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E'},
 			numOfStrings: 6},
 	},
 }
