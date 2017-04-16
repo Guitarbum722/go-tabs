@@ -2,6 +2,7 @@ package tabio
 
 import (
 	"bufio"
+	"bytes"
 	"errors"
 	"fmt"
 	"github.com/Guitarbum722/tablature/instrument"
@@ -52,7 +53,9 @@ func ExportTablature(i instrument.Instrument, w *TablatureWriter) error {
 
 	for _, v := range i.Order() {
 
-		w.tb.builder[v] = append(w.tb.builder[v], '\n')
+		if !bytes.Contains(w.tb.builder[v], []byte("\n")) {
+			w.tb.builder[v] = append(w.tb.builder[v], '\n')
+		}
 		_, err := w.Write(w.tb.builder[v])
 		if err != nil {
 			errMsg := fmt.Sprintf("there was an error writing to the bufferred writer: %s", err)
