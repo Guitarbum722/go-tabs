@@ -5,13 +5,14 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/Guitarbum722/tablature/instrument"
-	"github.com/Guitarbum722/tablature/tabio"
+	"github.com/Guitarbum722/go-tabs/instrument"
+	"github.com/Guitarbum722/go-tabs/tabio"
 	"log"
 	"os"
 	"strings"
 )
 
+// TODO(guitarbum722) define more valid characters such as hammer-on/pull-off and dead string 2017-04-15T18:00 4
 func main() {
 	var player instrument.Instrument = instrument.NewInstrument("guitar")
 	// err := player.Tune("Dadgbe")

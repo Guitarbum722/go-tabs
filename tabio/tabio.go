@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/Guitarbum722/tablature/instrument"
+	"github.com/Guitarbum722/go-tabs/instrument"
 	"io"
 )
 
