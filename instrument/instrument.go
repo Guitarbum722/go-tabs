@@ -252,6 +252,8 @@ func tuningLengthError(i Instrument, tuning string) string {
 		i.NumOfStrings())
 }
 
+// TODO(guitarbum722) define more valid characters such as hammer-ons, pull-offs and dead string 2017-04-15T18:00 4
+
 // ParseFingerBoard validates input for the next tab fingering, validates it and returns the parsed values.
 func ParseFingerBoard(i string) (byte, string, error) {
 
