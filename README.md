@@ -12,15 +12,12 @@
 
 #### Current instruments supported
 
-| Instrument  | Strings | Default Tuning |
-| ----------  | ------- | -------------- |
-| Guitar      | 6       | Eadgbe         |
-| Bass Guitar | 4       | Eadg           |
-| Ukulele     | 4       | Gcea           |
-
-* Standard 6 string guitar
-* Standard 4 string bass guitar
-* 4 String ukulele
+| Instrument      | Strings | Default Tuning |
+| :---------      | ------- | -------------: |
+| Guitar          | 6       | Eadgbe         |
+| Bass Guitar     | 4       | Eadg           |
+| Ukulele         | 4       | Gcea           |
+| 7 String Guitar | 7       | BEadgbe        |
 
 #### Contributing
 
