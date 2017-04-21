@@ -38,6 +38,19 @@ var newInstrumentCases = []struct {
 			numOfStrings: 4},
 	},
 	{
+		"guitar-seven",
+		&GuitarSeven{fretBoard: Fretboard{
+			'B': "---",
+			'E': "---",
+			'a': "---",
+			'd': "---",
+			'g': "---",
+			'b': "---",
+			'e': "---"},
+			order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E', 'B'},
+			numOfStrings: 7},
+	},
+	{
 		"unKnoWN",
 		&Guitar{fretBoard: Fretboard{
 			'E': "---",

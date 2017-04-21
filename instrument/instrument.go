@@ -16,28 +16,39 @@ type Instrument interface {
 	NumOfStrings() int
 }
 
-// TuningOrder defines the order in which the strings would be physically on the guitar.  TuningOrder can be used to display the
-// strings properly and consistently.
+// TuningOrder defines the order in which the strings would be physically on the guitar.
+// TuningOrder can be used to display the strings properly and consistently.
 type TuningOrder []byte
 
 // Fretboard represents the string/fretnumber relationship that is a single note or an entire chord.
 type Fretboard map[byte]string
 
-// Guitar represents a standard 6 string guitar with a default tuning of Eadgbe.  Tuning can be changed by calling Tune()
+// Guitar represents a standard 6 string guitar with a default tuning of Eadgbe.
+// Tuning can be changed by calling Tune()
 type Guitar struct {
 	fretBoard    Fretboard
 	order        TuningOrder
 	numOfStrings int
 }
 
-// Ukulele represents a standard 4 string ukulele with a default tuning of Gcea.  Tuning can be changed by calling Tune()
+// GuitarSeven represents a standard seven string guitar with a default tuning of BEadgbe.
+// Tuning can be changed by calling Tune()
+type GuitarSeven struct {
+	fretBoard    Fretboard
+	order        TuningOrder
+	numOfStrings int
+}
+
+// Ukulele represents a standard 4 string ukulele with a default tuning of Gcea.
+// Tuning can be changed by calling Tune()
 type Ukulele struct {
 	fretBoard    Fretboard
 	order        TuningOrder
 	numOfStrings int
 }
 
-// Bass represents a standard 4 string bass guitar with a default tuning of Eadg.  Tuning can be changed by calling Tune()
+// Bass represents a standard 4 string bass guitar with a default tuning of Eadg.
+// Tuning can be changed by calling Tune()
 type Bass struct {
 	fretBoard    Fretboard
 	order        TuningOrder
@@ -198,6 +209,47 @@ func (u *Ukulele) NumOfStrings() int {
 // Order returns the current tuning order for the current Ukulele
 func (u *Ukulele) Order() TuningOrder {
 	return u.order
+}
+
+func newGuitarSeven() *GuitarSeven {
+	return &GuitarSeven{fretBoard: Fretboard{
+		'B': "---",
+		'E': "---",
+		'a': "---",
+		'd': "---",
+		'g': "---",
+		'b': "---",
+		'e': "---"},
+		order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E', 'B'},
+		numOfStrings: 7}
+}
+
+func (gs *GuitarSeven) Tune(tuning string) error {
+	for _, v := range tuning {
+		if ok := validMusicNote(v); !ok {
+			return errors.New("one or more of the note provided in the requested tuning is invalid")
+		}
+	}
+	if ok := validCount(gs, tuning); !ok {
+		errMsg := tuningLengthError(gs, tuning)
+		return errors.New(errMsg)
+	}
+	return nil
+}
+
+// Fretboard returns the current map which represents the seven string guitar pointer's tuning.
+func (gs *GuitarSeven) Fretboard() Fretboard {
+	return gs.fretBoard
+}
+
+// Order returns the current tuning order for the current seven string Guitar
+func (gs *GuitarSeven) Order() TuningOrder {
+	return gs.order
+}
+
+// NumOfStrings returns the number of strings that the instrument has.
+func (gs *GuitarSeven) NumOfStrings() int {
+	return gs.numOfStrings
 }
 
 // StringifyCurrentTab converts the current fretBoard configuration to a string.
