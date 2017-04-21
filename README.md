@@ -14,7 +14,7 @@
 
 | Instrument  | Strings | Default Tuning |
 | ----------  | ------- | -------------- |
-| Guitar      | 6       | Eadgbt         |
+| Guitar      | 6       | Eadgbe         |
 | Bass Guitar | 4       | Eadg           |
 | Ukulele     | 4       | Gcea           |
 
