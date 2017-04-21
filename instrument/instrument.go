@@ -67,6 +67,8 @@ func NewInstrument(i string) Instrument {
 		instrument = newBass()
 	case "ukulele":
 		instrument = newUkulele()
+	case "guitar-seven":
+		instrument = newGuitarSeven()
 	default:
 		instrument = newGuitar()
 	}
