@@ -1,6 +1,7 @@
 package instrument
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -16,6 +17,9 @@ func TestTestVersion(t *testing.T) {
 func TestNewInstrument(t *testing.T) {
 	for _, tt := range newInstrumentCases {
 		got := NewInstrument(tt.inputType)
+		if reflect.TypeOf(got) != reflect.TypeOf(tt.expectedType) {
+			t.Fatalf("NewInstrument(%q) = %q which is not the desired return type.", tt.inputType, reflect.TypeOf(got))
+		}
 		fb := got.Fretboard()
 		for k := range fb {
 			if _, ok := fb[k]; !ok {
