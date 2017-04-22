@@ -29,6 +29,9 @@ func TestNewInstrument(t *testing.T) {
 
 		gotOrder := got.Order()
 		wantOrder := tt.expectedType.Order()
+		if len(fb) != len(tt.expectedType.Fretboard()) {
+			t.Fatalf("Fretboard() = %q ::: length of got %d want %d", fb, len(fb), len(tt.expectedType.Fretboard()))
+		}
 		for i := range gotOrder {
 			if gotOrder[i] != wantOrder[i] {
 				t.Fatalf("Order() = %q ::: got %q want %q", gotOrder, gotOrder[i], wantOrder[i])
