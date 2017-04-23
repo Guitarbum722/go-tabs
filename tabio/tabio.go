@@ -39,8 +39,7 @@ func NewTablatureWriter(w io.Writer, pos int) *TablatureWriter {
 func StageTablature(i instrument.Instrument, w *TablatureWriter) {
 
 	for k, v := range i.Fretboard() {
-		// remove
-		fmt.Println("Len of tb.builder[k] : ", len(w.tb.builder[k]))
+
 		if len(w.tb.builder[k]) == 0 {
 			w.tb.builder[k] = append(w.tb.builder[k], k, ':', ' ')
 		}
