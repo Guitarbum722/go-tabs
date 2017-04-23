@@ -3,7 +3,6 @@ package tabio
 import (
 	"bufio"
 	"bytes"
-	"errors"
 	"fmt"
 	"github.com/Guitarbum722/go-tabs/instrument"
 	"io"
@@ -40,10 +39,20 @@ func StageTablature(i instrument.Instrument, w *TablatureWriter) {
 
 	for k, v := range i.Fretboard() {
 
+		// labels each instrument's "string" with a prefix
 		if len(w.tb.builder[k]) == 0 {
 			w.tb.builder[k] = append(w.tb.builder[k], k, ':', ' ')
 		}
-		w.tb.builder[k] = append(w.tb.builder[k], []byte(v)...)
+
+		// adds the first newline after each line of tablature.
+		// the newline is added to the end of each line of tablature
+		if !bytes.Contains(w.tb.builder[k], []byte("\n")) {
+			w.tb.builder[k] = append(w.tb.builder[k], []byte(v)...)
+			w.tb.builder[k] = append(w.tb.builder[k], '\n')
+		} else {
+			w.tb.builder[k] = append(w.tb.builder[k][:len(w.tb.builder[k])-1], []byte(v)...)
+			w.tb.builder[k] = append(w.tb.builder[k], '\n')
+		}
 	}
 
 	return
@@ -54,14 +63,7 @@ func ExportTablature(i instrument.Instrument, w *TablatureWriter) error {
 
 	for _, v := range i.Order() {
 
-		if !bytes.Contains(w.tb.builder[v], []byte("\n")) {
-			w.tb.builder[v] = append(w.tb.builder[v], '\n')
-		}
-		_, err := w.Write(w.tb.builder[v])
-		if err != nil {
-			errMsg := fmt.Sprintf("there was an error writing to the bufferred writer: %s", err)
-			return errors.New(errMsg)
-		}
+		fmt.Fprint(w, string(w.tb.builder[v]))
 	}
 
 	w.Flush()
