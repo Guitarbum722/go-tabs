@@ -27,7 +27,7 @@ func main() {
 
 	w := tabio.NewTablatureWriter(os.Stdout, 20)
 	// f, _ := os.OpenFile("guitar_tab.txt", os.O_RDWR|os.O_CREATE, 0755)
-	// w := tabio.NewTablatureWriter(f, 20)
+	// w := tabio.NewTablatureWriter(f, 110)
 
 	for {
 		input, _ := reader.ReadString('\n')
