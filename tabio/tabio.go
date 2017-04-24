@@ -59,13 +59,7 @@ func ExportTablature(i instrument.Instrument, w *TablatureWriter) error {
 
 			w.Write([]byte{v, ':', ' '})
 
-			// use the TablatureWriter's wrap position to determine when to continue a new
-			// tablature section in the output
-			if w.totalLength < w.WrapPosition {
-				if _, err := w.Write(w.tb.builder[v][:w.totalLength]); err != nil {
-					return errors.Wrap(err, "write to buffer failed")
-				}
-			} else if (done + w.WrapPosition) < w.totalLength {
+			if (done + w.WrapPosition) < w.totalLength {
 				if _, err := w.Write(w.tb.builder[v][done:(done + w.WrapPosition)]); err != nil {
 					return errors.Wrap(err, "write to buffer failed")
 				}
