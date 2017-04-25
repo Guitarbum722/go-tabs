@@ -51,6 +51,16 @@ var newInstrumentCases = []struct {
 			numOfStrings: 7},
 	},
 	{
+		"mandolin",
+		&Mandolin{fretBoard: Fretboard{
+			'G': "---",
+			'd': "---",
+			'a': "---",
+			'e': "---"},
+			order:        TuningOrder{'e', 'a', 'd', 'G'},
+			numOfStrings: 4},
+	},
+	{
 		"unKnoWN",
 		&Guitar{fretBoard: Fretboard{
 			'E': "---",

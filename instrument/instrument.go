@@ -39,6 +39,12 @@ type GuitarSeven struct {
 	numOfStrings int
 }
 
+type Mandolin struct {
+	fretBoard    Fretboard
+	order        TuningOrder
+	numOfStrings int
+}
+
 // Ukulele represents a standard 4 string ukulele with a default tuning of Gcea.
 // Tuning can be changed by calling Tune()
 type Ukulele struct {
@@ -69,6 +75,8 @@ func NewInstrument(i string) Instrument {
 		instrument = newUkulele()
 	case "guitar-seven":
 		instrument = newGuitarSeven()
+	case "mandolin":
+		instrument = newMandolin()
 	default:
 		instrument = newGuitar()
 	}
@@ -223,7 +231,8 @@ func newGuitarSeven() *GuitarSeven {
 		'b': "---",
 		'e': "---"},
 		order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E', 'B'},
-		numOfStrings: 7}
+		numOfStrings: 7,
+	}
 }
 
 func (gs *GuitarSeven) Tune(tuning string) error {
@@ -252,6 +261,17 @@ func (gs *GuitarSeven) Order() TuningOrder {
 // NumOfStrings returns the number of strings that the instrument has.
 func (gs *GuitarSeven) NumOfStrings() int {
 	return gs.numOfStrings
+}
+
+func newMandolin() *Mandolin {
+	return &Mandolin{fretBoard: Fretboard{
+		'G': "---",
+		'd': "---",
+		'a': "---",
+		'e': "---"},
+		order:        TuningOrder{'e', 'a', 'd', 'G'},
+		numOfStrings: 4,
+	}
 }
 
 // StringifyCurrentTab converts the current fretBoard configuration to a string.
