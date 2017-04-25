@@ -235,6 +235,9 @@ func newGuitarSeven() *GuitarSeven {
 	}
 }
 
+// Tune updates the tuning configuration of the current Seven-string guitar.  The order of the strings will also be the order in which the
+// tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
+// as the count of the input.
 func (gs *GuitarSeven) Tune(tuning string) error {
 	for _, v := range tuning {
 		if ok := validMusicNote(v); !ok {
@@ -272,6 +275,37 @@ func newMandolin() *Mandolin {
 		order:        TuningOrder{'e', 'a', 'd', 'G'},
 		numOfStrings: 4,
 	}
+}
+
+// Tune updates the tuning configuration of the current mandolin.  The order of the strings will also be the order in which the
+// tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
+// as the count of the input.
+func (m *Mandolin) Tune(tuning string) error {
+	for _, v := range tuning {
+		if ok := validMusicNote(v); !ok {
+			return errors.New("one or more of the note provided in the requested tuning is invalid")
+		}
+	}
+	if ok := validCount(m, tuning); !ok {
+		errMsg := tuningLengthError(m, tuning)
+		return errors.New(errMsg)
+	}
+	return nil
+}
+
+// Fretboard returns the current map which represents the mandolin pointer's tuning.
+func (m *Mandolin) Fretboard() Fretboard {
+	return m.fretBoard
+}
+
+// Order returns the current tuning order for the current Mandolin
+func (m *Mandolin) Order() TuningOrder {
+	return m.order
+}
+
+// NumOfStrings returns the number of strings that the instrument has.
+func (m *Mandolin) NumOfStrings() int {
+	return m.numOfStrings
 }
 
 // StringifyCurrentTab converts the current fretBoard configuration to a string.
