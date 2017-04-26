@@ -23,7 +23,9 @@ type tablatureBuilder struct {
 
 // NewTablatureWriter creates a buffered writer to be used for staging tablature
 func NewTablatureWriter(w io.Writer, pos int) *TablatureWriter {
-
+	if pos < 20 {
+		pos = 20
+	}
 	return &TablatureWriter{
 		bufio.NewWriter(w),
 		pos,
