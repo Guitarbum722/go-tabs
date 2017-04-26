@@ -14,7 +14,7 @@ import (
 
 // TODO(guitarbum722) define more valid characters such as hammer-on/pull-off and dead string 2017-04-15T18:00 4
 func main() {
-	var player instrument.Instrument = instrument.NewInstrument("guitar")
+	var player = instrument.NewInstrument("guitar")
 	// err := player.Tune("Dadgbe")
 	// if err != nil {
 	// 	log.Fatal("error tuning guitar")
@@ -30,7 +30,7 @@ func main() {
 	if err != nil {
 		log.Printf("error opening file %s", err)
 	}
-	w := tabio.NewTablatureWriter(f, 110)
+	w := tabio.NewTablatureWriter(f, 80)
 
 	for z := 0; z < 1; {
 		input, _ := reader.ReadString('\n')
