@@ -26,10 +26,13 @@ func main() {
 	fmt.Print(instrument.StringifyCurrentTab(player))
 
 	// w := tabio.NewTablatureWriter(os.Stdout, 20)
-	f, _ := os.OpenFile("guitar_tab.txt", os.O_RDWR|os.O_CREATE, 0755)
+	f, err := os.OpenFile("guitar_tab.txt", os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		log.Printf("error opening file %s", err)
+	}
 	w := tabio.NewTablatureWriter(f, 110)
 
-	for {
+	for z := 0; z < 1; {
 		input, _ := reader.ReadString('\n')
 		input = strings.Replace(input, "\n", "", -1) // Windows; BOOO!
 
@@ -47,6 +50,8 @@ func main() {
 			for k := range player.Fretboard() {
 				instrument.UpdateCurrentTab(player, k, "-")
 			}
+		case "quit":
+			z++
 		default:
 			guitarString, fret, err := instrument.ParseFingerBoard(input)
 			if err != nil {
@@ -57,4 +62,9 @@ func main() {
 			fmt.Print(instrument.StringifyCurrentTab(player))
 		}
 	}
+	if err := f.Close(); err != nil {
+		log.Printf("error closing the file %s", err)
+		os.Exit(1)
+	}
+	os.Exit(0)
 }
