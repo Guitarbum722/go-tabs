@@ -1,6 +1,8 @@
 ## ----GO--------
 ## -🎸-----TABS---
 
+[![Build Status](https://travis-ci.org/Guitarbum722/go-tabs.svg?branch=master)](https://travis-ci.org/Guitarbum722/go-tabs)
+
 ### A minimal and easy to use package for creating tablature for stringed / fretted instruments
 
 #### What's included?
@@ -110,6 +112,18 @@ d: -----------------------------------------------------------2--1--2-----------
 a: --2--------------------------------------------------------------2--------------
 E: --5-----------------------------------------------------------------------------
 ```
+
+### What if I want a different tuning?
+
+You can tune the instrument to whatever you want!  If two strings are tuned to the same note, then
+make the 'lower' octave string an uppercase letter.  The tuning that is input will
+be validated against the number of strings the instrument should have.
+```go
+if err := player.Tune("Dadgbe"); err != nil {
+	log.Fatal("error tuning guitar")
+}
+```
+
 
 #### Current instruments supported
 
