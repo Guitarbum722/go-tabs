@@ -1,5 +1,5 @@
 ## ----GO--------
-## -------TABS---
+## -🎸-----TABS---
 
 ### A minimal and easy to use package for creating tablature for stringed / fretted instruments
 
@@ -66,6 +66,49 @@ E: -------------------------------
 ```go
 // update the wrap
 w.UpdateWrapPosition(110) // if input is less than 20, the default is 20
+```
+
+Enter an instrument's string and the fret number.  Example [ E12 ] or [ a7 ]
+```go
+	guitarString, fret, err := instrument.ParseFingerBoard(input) // (input == "E12") && true == true
+	if err != nil {
+		log.Printf("invalid entry: %s", err)
+	} else {
+		instrument.UpdateCurrentTab(player, guitarString, fret) // update the instrument's 'current' tablature
+
+	}
+	fmt.Print(instrument.StringifyCurrentTab(player))
+
+```
+Above: validate and parse the input to refresh the 'current' tablature (which could be a single note or a chord).
+
+If it is determined that the current tablature is correct, then it needs to get 'staged' which is really just a map that
+buffers each of the instrument's tablature by string.
+
+```go
+	tabio.StageTablature(player, w) // adds the current tablature to the staging buffer of the TablatureWriter
+	for k := range player.Fretboard() {
+		instrument.UpdateCurrentTab(player, k, "-") // refreshes the current tablature with no fret markers
+	}
+	fmt.Print(instrument.StringifyCurrentTab(player))
+
+```
+
+Now export all of the staged tablature to the TablatureWriter's underlying buffered writer that it was
+initialized with (in the case of this document, os.Stdout).  The tablature will wrap appropriately based
+on the configured wrap position.
+```go
+	if err := tabio.ExportTablature(player, w); err != nil {
+		log.Fatalf("there was an error exporting the tablature::: %s\n", err)
+	}
+```
+```
+e: --5-----------------------------------------------------------------------------
+b: --------------------------------------------------------2-----------------------
+g: -----------------------------------------------------------------1--------------
+d: -----------------------------------------------------------2--1--2--------------
+a: --2--------------------------------------------------------------2--------------
+E: --5-----------------------------------------------------------------------------
 ```
 
 #### Current instruments supported
