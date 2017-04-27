@@ -134,6 +134,7 @@ if err := player.Tune("Dadgbe"); err != nil {
 | Ukulele         | 4       | Gcea           |
 | 7 String Guitar | 7       | BEadgbe        |
 | Mandolin        | 4       | Gdea           |
+| 5 String Bass   | 5       | BEadg          |
 
 #### Contributing
 

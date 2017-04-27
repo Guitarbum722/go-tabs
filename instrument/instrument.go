@@ -61,6 +61,14 @@ type Bass struct {
 	numOfStrings int
 }
 
+// BassFive represents a five string bass guitar with a default tuning of BEadg.
+// Tuning can be changed by calling Tune()
+type BassFive struct {
+	fretBoard    Fretboard
+	order        TuningOrder
+	numOfStrings int
+}
+
 // NewInstrument returns the configured instrument in its default tuning.  A Guitar in standard tuning will be returned by
 // default if the desired instrument is not available.
 func NewInstrument(i string) Instrument {
@@ -77,6 +85,8 @@ func NewInstrument(i string) Instrument {
 		instrument = newGuitarSeven()
 	case "mandolin":
 		instrument = newMandolin()
+	case "bass-five":
+		instrument = newBassFive()
 	default:
 		instrument = newGuitar()
 	}
@@ -306,6 +316,49 @@ func (m *Mandolin) Order() TuningOrder {
 // NumOfStrings returns the number of strings that the instrument has.
 func (m *Mandolin) NumOfStrings() int {
 	return m.numOfStrings
+}
+
+func newBassFive() *BassFive {
+	return &BassFive{fretBoard: Fretboard{
+		'B': "---",
+		'E': "---",
+		'a': "---",
+		'd': "---",
+		'g': "---"},
+		order:        TuningOrder{'g', 'd', 'a', 'E', 'B'},
+		numOfStrings: 5,
+	}
+}
+
+// Fretboard returns the current map which represents the 5 string bass pointer's tuning.
+func (bf *BassFive) Fretboard() Fretboard {
+	return bf.fretBoard
+}
+
+// Order returns the current tuning order for the current 5 string bass
+func (bf *BassFive) Order() TuningOrder {
+	return bf.order
+}
+
+// NumOfStrings returns the number of strings that the instrument has.
+func (bf *BassFive) NumOfStrings() int {
+	return bf.numOfStrings
+}
+
+// Tune updates the tuning configuration of the current 5 string bass.  The order of the strings will also be the order in which the
+// tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
+// as the count of the input.
+func (bf *BassFive) Tune(tuning string) error {
+	for _, v := range tuning {
+		if ok := validMusicNote(v); !ok {
+			return errors.New("one or more of the note provided in the requested tuning is invalid")
+		}
+	}
+	if ok := validCount(bf, tuning); !ok {
+		errMsg := tuningLengthError(bf, tuning)
+		return errors.New(errMsg)
+	}
+	return nil
 }
 
 // StringifyCurrentTab converts the current fretBoard configuration to a string.
