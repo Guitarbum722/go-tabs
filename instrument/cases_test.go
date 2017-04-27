@@ -94,6 +94,11 @@ var tuneCases = []struct {
 		"Eadgbz",
 		true,
 	},
+	{
+		"guitar",
+		"EadgbeA",
+		true,
+	},
 }
 
 var parseFingerBoardCases = []struct {
