@@ -39,6 +39,9 @@ type GuitarSeven struct {
 	numOfStrings int
 }
 
+// Mandolin represents a standard 8 string mandolin (which will be treated as 4 strings since
+// they are just different octaves) with a default tuning of Gdae.
+// Tuning can be changed by calling Tune()
 type Mandolin struct {
 	fretBoard    Fretboard
 	order        TuningOrder
