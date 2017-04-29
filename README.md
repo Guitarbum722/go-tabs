@@ -11,6 +11,17 @@
 * A simple package that can be quickly and easily implemented by your own application
 
 #### Usage
+
+##### _*In a nutshell, the basic usage is as follows:*_
+> 1. Initialize an _Instrument_
+> 2. Initialize a _TablatureWriter_
+> 3. Tune the _instrument_ (only if desired tuning is different than the default)
+> 4. Provide input for the 'current' tablature.  This is how you input a single note on the fretboard
+or build an entire chord.
+> 5. 'Stage' the current tablature.
+> 6. Keep building 'current' tablature and staging
+> 7. Export the staged tablature to the provided writer (typically a file) 
+
 ``` sh
 $ go get -u github.com/Guitarbum722/go-tabs
 ```
