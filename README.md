@@ -1,5 +1,5 @@
-## ----GO--------
-## -🎸-----TABS---
+### ----GO--------
+### -🎸-----TABS---
 
 [![Build Status](https://travis-ci.org/Guitarbum722/go-tabs.svg?branch=master)](https://travis-ci.org/Guitarbum722/go-tabs)
 
