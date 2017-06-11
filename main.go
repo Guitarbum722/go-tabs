@@ -22,13 +22,7 @@ const (
 	bassFive    = "bass-five"
 )
 
-// TODO(guitarbum722) define more valid characters such as hammer-on/pull-off and dead string 2017-04-15T18:00 4
 func main() {
-	// var player = instrument.NewInstrument("mandolin")
-	// err := player.Tune("Dadgbe")
-	// if err != nil {
-	// 	log.Fatal("error tuning guitar")
-	// }
 
 	reader := bufio.NewReader(os.Stdin)
 
@@ -71,7 +65,6 @@ func main() {
 	fmt.Println("****************")
 	fmt.Print(instrument.StringifyCurrentTab(player))
 
-	// w := tabio.NewTablatureWriter(os.Stdout, 20)
 	f, err := os.OpenFile("guitar_tab.txt", os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		log.Printf("error opening file %s", err)
