@@ -72,6 +72,20 @@ var newInstrumentCases = []struct {
 			numOfStrings: 4},
 	},
 	{
+		"lap-steel",
+		&LapSteel{fretBoard: Fretboard{
+			'C': "---",
+			'E': "---",
+			'g': "---",
+			'a': "---",
+			'c': "---",
+			'e': "---",
+		},
+			order:        TuningOrder{'e', 'c', 'a', 'g', 'E', 'C'},
+			numOfStrings: 6,
+		},
+	},
+	{
 		"unKnoWN",
 		&Guitar{fretBoard: Fretboard{
 			'E': "---",

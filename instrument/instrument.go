@@ -72,6 +72,14 @@ type BassFive struct {
 	numOfStrings int
 }
 
+// LapSteel represents a standard lap steel guitar with 6 strings and a default tuning of CEgace.
+// Tuning can be changed by calling Tune()
+type LapSteel struct {
+	fretBoard    Fretboard
+	order        TuningOrder
+	numOfStrings int
+}
+
 // NewInstrument returns the configured instrument in its default tuning.  A Guitar in standard tuning will be returned by
 // default if the desired instrument is not available.
 func NewInstrument(i string) Instrument {
@@ -90,6 +98,8 @@ func NewInstrument(i string) Instrument {
 		instrument = newMandolin()
 	case "bass-five":
 		instrument = newBassFive()
+	case "lap-steel":
+		instrument = newLapSteel()
 	default:
 		instrument = newGuitar()
 	}
@@ -200,6 +210,21 @@ func newUkulele() *Ukulele {
 		'a': "---"},
 		order:        TuningOrder{'a', 'e', 'c', 'G'},
 		numOfStrings: 4,
+	}
+}
+
+// returns a pointer to a guitar with a standard tuning by default.
+func newLapSteel() *LapSteel {
+	return &LapSteel{fretBoard: Fretboard{
+		'C': "---",
+		'E': "---",
+		'g': "---",
+		'a': "---",
+		'c': "---",
+		'e': "---",
+	},
+		order:        TuningOrder{'e', 'c', 'a', 'g', 'E', 'C'},
+		numOfStrings: 6,
 	}
 }
 
@@ -362,6 +387,37 @@ func (bf *BassFive) Tune(tuning string) error {
 		return errors.New(errMsg)
 	}
 	return nil
+}
+
+// Tune updates the tuning configuration of the current lap steel guitar.  The order of the strings will also be the order in which the
+// tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
+// as the count of the input.
+func (l *LapSteel) Tune(tuning string) error {
+	for _, v := range tuning {
+		if ok := validMusicNote(v); !ok {
+			return errors.New("one or more of the note provided in the requested tuning is invalid")
+		}
+	}
+	if ok := validCount(l, tuning); !ok {
+		errMsg := tuningLengthError(l, tuning)
+		return errors.New(errMsg)
+	}
+	return nil
+}
+
+// Fretboard returns the current map which represents the lap steel guitar tuning
+func (l *LapSteel) Fretboard() Fretboard {
+	return l.fretBoard
+}
+
+// Order returns the current tuning order for the current lap steel guitar
+func (l *LapSteel) Order() TuningOrder {
+	return l.order
+}
+
+// NumOfStrings returns the number of strings that the instrument has.
+func (l *LapSteel) NumOfStrings() int {
+	return l.numOfStrings
 }
 
 // StringifyCurrentTab converts the current fretBoard configuration to a string.

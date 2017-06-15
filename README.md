@@ -139,14 +139,15 @@ if err := player.Tune("Dadgbe"); err != nil {
 #### Current instruments supported
 
 
-| Instrument      | Strings | Default Tuning | NewInstrument(s string) |
-| :---------      | :-------: | :-------------: | :---- |
-| Guitar          | 6       | Eadgbe         | guitar |
-| Bass Guitar     | 4       | Eadg           | bass |
-| Ukulele         | 4       | Gcea           | ukulele |
-| 7 String Guitar | 7       | BEadgbe        | guitar-seven|
-| Mandolin        | 4       | Gdea           | mandolin |
-| 5 String Bass   | 5       | BEadg          | bass-five |
+| Instrument       | Strings | Default Tuning | NewInstrument(s string) |
+| :---------       | :-------: | :-------------: | :---- |
+| Guitar           | 6       | Eadgbe         | guitar |
+| Bass Guitar      | 4       | Eadg           | bass |
+| Ukulele          | 4       | Gcea           | ukulele |
+| 7 String Guitar  | 7       | BEadgbe        | guitar-seven|
+| Mandolin         | 4       | Gdea           | mandolin |
+| 5 String Bass    | 5       | BEadg          | bass-five |
+| Lap Steel Guitar | 6      | CEgace         | lap-steel |
 
 #### Contributing
 
