@@ -492,38 +492,7 @@ func ParseFingerBoard(i string) (byte, string, error) {
 		return 0, "-", errors.New("invalid entry: make sure the fret number is numeric")
 	}
 
-	// confirms that the string input by the user is valid
-	switch i[0] {
-	case 'A':
-		instrumentString = i[0]
-	case 'B':
-		instrumentString = i[0]
-	case 'C':
-		instrumentString = i[0]
-	case 'D':
-		instrumentString = i[0]
-	case 'E':
-		instrumentString = i[0]
-	case 'F':
-		instrumentString = i[0]
-	case 'G':
-		instrumentString = i[0]
-	case 'a':
-		instrumentString = i[0]
-	case 'b':
-		instrumentString = i[0]
-	case 'c':
-		instrumentString = i[0]
-	case 'd':
-		instrumentString = i[0]
-	case 'e':
-		instrumentString = i[0]
-	case 'f':
-		instrumentString = i[0]
-	case 'g':
-		instrumentString = i[0]
-	}
-
+	instrumentString = i[0]
 	fret := i[1:]
 
 	return instrumentString, fret, nil
