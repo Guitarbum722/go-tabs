@@ -6,7 +6,13 @@ import (
 	"reflect"
 )
 
-const testVersion = 2
+const (
+	musicFlat        = "\u266D"
+	musicSharp       = "\u266F"
+	openPlayerString = "---"
+
+	testVersion = 2
+)
 
 // Instrument defines behavior that is common across the instruments used in this package, such as setting the tuning.
 type Instrument interface {
@@ -124,7 +130,7 @@ func (g *Guitar) Tune(tuning string) error {
 		delete(g.fretBoard, k)
 	}
 	for _, v := range tuning {
-		g.fretBoard[byte(v)] = "---"
+		g.fretBoard[byte(v)] = openPlayerString
 	}
 	g.order = TuningOrder(tuning)
 	return nil
@@ -148,12 +154,13 @@ func (g *Guitar) Order() TuningOrder {
 // returns a pointer to a guitar with standard tuning by default.
 func newGuitar() *Guitar {
 	return &Guitar{fretBoard: Fretboard{
-		'E': "---",
-		'a': "---",
-		'd': "---",
-		'g': "---",
-		'b': "---",
-		'e': "---"},
+		'E': openPlayerString,
+		'a': openPlayerString,
+		'd': openPlayerString,
+		'g': openPlayerString,
+		'b': openPlayerString,
+		'e': openPlayerString,
+	},
 		order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E'},
 		numOfStrings: 6,
 	}
@@ -193,10 +200,11 @@ func (b *Bass) NumOfStrings() int {
 // returns a pointer to a guitar with a standard tuning by default.
 func newBass() *Bass {
 	return &Bass{fretBoard: Fretboard{
-		'E': "---",
-		'a': "---",
-		'd': "---",
-		'g': "---"},
+		'E': openPlayerString,
+		'a': openPlayerString,
+		'd': openPlayerString,
+		'g': openPlayerString,
+	},
 		order:        TuningOrder{'g', 'd', 'a', 'E'},
 		numOfStrings: 4,
 	}
@@ -204,10 +212,11 @@ func newBass() *Bass {
 
 func newUkulele() *Ukulele {
 	return &Ukulele{fretBoard: Fretboard{
-		'G': "---",
-		'c': "---",
-		'e': "---",
-		'a': "---"},
+		'G': openPlayerString,
+		'c': openPlayerString,
+		'e': openPlayerString,
+		'a': openPlayerString,
+	},
 		order:        TuningOrder{'a', 'e', 'c', 'G'},
 		numOfStrings: 4,
 	}
@@ -216,12 +225,12 @@ func newUkulele() *Ukulele {
 // returns a pointer to a guitar with a standard tuning by default.
 func newLapSteel() *LapSteel {
 	return &LapSteel{fretBoard: Fretboard{
-		'C': "---",
-		'E': "---",
-		'g': "---",
-		'a': "---",
-		'c': "---",
-		'e': "---",
+		'C': openPlayerString,
+		'E': openPlayerString,
+		'g': openPlayerString,
+		'a': openPlayerString,
+		'c': openPlayerString,
+		'e': openPlayerString,
 	},
 		order:        TuningOrder{'e', 'c', 'a', 'g', 'E', 'C'},
 		numOfStrings: 6,
@@ -261,13 +270,14 @@ func (u *Ukulele) Order() TuningOrder {
 
 func newGuitarSeven() *GuitarSeven {
 	return &GuitarSeven{fretBoard: Fretboard{
-		'B': "---",
-		'E': "---",
-		'a': "---",
-		'd': "---",
-		'g': "---",
-		'b': "---",
-		'e': "---"},
+		'B': openPlayerString,
+		'E': openPlayerString,
+		'a': openPlayerString,
+		'd': openPlayerString,
+		'g': openPlayerString,
+		'b': openPlayerString,
+		'e': openPlayerString,
+	},
 		order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E', 'B'},
 		numOfStrings: 7,
 	}
@@ -306,10 +316,11 @@ func (gs *GuitarSeven) NumOfStrings() int {
 
 func newMandolin() *Mandolin {
 	return &Mandolin{fretBoard: Fretboard{
-		'G': "---",
-		'd': "---",
-		'a': "---",
-		'e': "---"},
+		'G': openPlayerString,
+		'd': openPlayerString,
+		'a': openPlayerString,
+		'e': openPlayerString,
+	},
 		order:        TuningOrder{'e', 'a', 'd', 'G'},
 		numOfStrings: 4,
 	}
@@ -348,11 +359,12 @@ func (m *Mandolin) NumOfStrings() int {
 
 func newBassFive() *BassFive {
 	return &BassFive{fretBoard: Fretboard{
-		'B': "---",
-		'E': "---",
-		'a': "---",
-		'd': "---",
-		'g': "---"},
+		'B': openPlayerString,
+		'E': openPlayerString,
+		'a': openPlayerString,
+		'd': openPlayerString,
+		'g': openPlayerString,
+	},
 		order:        TuningOrder{'g', 'd', 'a', 'E', 'B'},
 		numOfStrings: 5,
 	}
@@ -492,38 +504,7 @@ func ParseFingerBoard(i string) (byte, string, error) {
 		return 0, "-", errors.New("invalid entry: make sure the fret number is numeric")
 	}
 
-	// confirms that the string input by the user is valid
-	switch i[0] {
-	case 'A':
-		instrumentString = i[0]
-	case 'B':
-		instrumentString = i[0]
-	case 'C':
-		instrumentString = i[0]
-	case 'D':
-		instrumentString = i[0]
-	case 'E':
-		instrumentString = i[0]
-	case 'F':
-		instrumentString = i[0]
-	case 'G':
-		instrumentString = i[0]
-	case 'a':
-		instrumentString = i[0]
-	case 'b':
-		instrumentString = i[0]
-	case 'c':
-		instrumentString = i[0]
-	case 'd':
-		instrumentString = i[0]
-	case 'e':
-		instrumentString = i[0]
-	case 'f':
-		instrumentString = i[0]
-	case 'g':
-		instrumentString = i[0]
-	}
-
+	instrumentString = i[0]
 	fret := i[1:]
 
 	return instrumentString, fret, nil
