@@ -1,3 +1,4 @@
 debug
 .DS_Store
 *.txt
+bench_results.txt

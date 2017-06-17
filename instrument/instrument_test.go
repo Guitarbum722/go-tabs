@@ -1,7 +1,6 @@
 package instrument
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -18,7 +17,6 @@ func TestTestVersion(t *testing.T) {
 func TestNewInstrument(t *testing.T) {
 	for _, tt := range newInstrumentCases {
 		got := NewInstrument(tt.inputType)
-		fmt.Println(reflect.TypeOf(got))
 		if reflect.TypeOf(got) != reflect.TypeOf(tt.expectedType) {
 			t.Fatalf("NewInstrument(%q) = %q which is not the desired return type.", tt.inputType, reflect.TypeOf(got))
 		}
@@ -72,5 +70,15 @@ func BenchmarkNewInstrument(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		NewInstrument(newInstrumentCases[0].inputType)
+	}
+}
+
+func BenchmarkUpdateCurrentTab(b *testing.B) {
+	player := NewInstrument(newInstrumentCases[0].inputType)
+
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		UpdateCurrentTab(player, 'E', "22")
 	}
 }

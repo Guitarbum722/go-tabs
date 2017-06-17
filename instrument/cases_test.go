@@ -139,6 +139,12 @@ var parseFingerBoardCases = []struct {
 	wantErr          bool
 }{
 	{
+		"a0",
+		'a',
+		"0",
+		false,
+	},
+	{
 		"a1",
 		'a',
 		"1",
