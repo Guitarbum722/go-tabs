@@ -74,3 +74,13 @@ func BenchmarkNewInstrument(b *testing.B) {
 		NewInstrument(newInstrumentCases[0].inputType)
 	}
 }
+
+func BenchmarkUpdateCurrentTab(b *testing.B) {
+	player := NewInstrument(newInstrumentCases[0].inputType)
+
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		UpdateCurrentTab(player, 'E', "22")
+	}
+}

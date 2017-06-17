@@ -448,15 +448,16 @@ func UpdateCurrentTab(i Instrument, instrumentString byte, fret string) {
 	switch len(fret) {
 	case 1:
 		if fret == "0" {
-			i.Fretboard()[instrumentString] = fmt.Sprintf("--%s", "-")
-		} else {
-			i.Fretboard()[instrumentString] = fmt.Sprintf("--%s", fret)
+			i.Fretboard()[instrumentString] = openPlayerString
+			break
 		}
+		i.Fretboard()[instrumentString] = "--" + fret
 	case 2:
-		i.Fretboard()[instrumentString] = fmt.Sprintf("-%s", fret)
+		i.Fretboard()[instrumentString] = "-" + fret
 	case 3:
-		i.Fretboard()[instrumentString] = fmt.Sprintf("%s", fret)
+		i.Fretboard()[instrumentString] = fret
 	}
+	return
 }
 
 func validMusicNote(note rune) bool {
