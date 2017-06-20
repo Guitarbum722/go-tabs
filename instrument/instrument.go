@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 const (
@@ -16,7 +17,7 @@ const (
 
 // Instrument defines behavior that is common across the instruments used in this package, such as setting the tuning.
 type Instrument interface {
-	Tune(tuning string) error
+	Tune(tuning []string) error
 	Fretboard() Fretboard
 	Order() TuningOrder
 	NumOfStrings() int
@@ -24,10 +25,10 @@ type Instrument interface {
 
 // TuningOrder defines the order in which the strings would be physically on the guitar.
 // TuningOrder can be used to display the strings properly and consistently.
-type TuningOrder []byte
+type TuningOrder []string
 
 // Fretboard represents the string/fretnumber relationship that is a single note or an entire chord.
-type Fretboard map[byte]string
+type Fretboard map[string]string
 
 // Guitar represents a standard 6 string guitar with a default tuning of Eadgbe.
 // Tuning can be changed by calling Tune()
@@ -116,7 +117,7 @@ func NewInstrument(i string) Instrument {
 // Tune updates the tuning configuration of the current Guitar.  The order of the strings will also be the order in which the
 // tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
 // as the count of the input.
-func (g *Guitar) Tune(tuning string) error {
+func (g *Guitar) Tune(tuning []string) error {
 	for _, v := range tuning {
 		if valid := validMusicNote(v); !valid {
 			return errors.New("one or more of the note provided in the requested tuning is invalid")
@@ -130,13 +131,13 @@ func (g *Guitar) Tune(tuning string) error {
 		delete(g.fretBoard, k)
 	}
 	for _, v := range tuning {
-		g.fretBoard[byte(v)] = openPlayerString
+		g.fretBoard[v] = openPlayerString
 	}
 	g.order = TuningOrder(tuning)
 	return nil
 }
 
-// Fretboard returns the current map which represents the Guitar pointer's tuning.
+// Fretboard returns the current map which represents the Guitar pointer"s tuning.
 func (g *Guitar) Fretboard() Fretboard {
 	return g.fretBoard
 }
@@ -154,14 +155,14 @@ func (g *Guitar) Order() TuningOrder {
 // returns a pointer to a guitar with standard tuning by default.
 func newGuitar() *Guitar {
 	return &Guitar{fretBoard: Fretboard{
-		'E': openPlayerString,
-		'a': openPlayerString,
-		'd': openPlayerString,
-		'g': openPlayerString,
-		'b': openPlayerString,
-		'e': openPlayerString,
+		"E": openPlayerString,
+		"a": openPlayerString,
+		"d": openPlayerString,
+		"g": openPlayerString,
+		"b": openPlayerString,
+		"e": openPlayerString,
 	},
-		order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E'},
+		order:        TuningOrder{"e", "b", "g", "d", "a", "E"},
 		numOfStrings: 6,
 	}
 }
@@ -169,7 +170,7 @@ func newGuitar() *Guitar {
 // Tune updates the tuning configuration of the current Bass.  The order of the strings will also be the order in which the
 // tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
 // as the count of the input.
-func (b *Bass) Tune(tuning string) error {
+func (b *Bass) Tune(tuning []string) error {
 	for _, v := range tuning {
 		if ok := validMusicNote(v); !ok {
 			return errors.New("one or more of the note provided in the requested tuning is invalid")
@@ -187,7 +188,7 @@ func (b *Bass) Order() TuningOrder {
 	return b.order
 }
 
-// Fretboard returns the current map which represents the Bass pointer's tuning.
+// Fretboard returns the current map which represents the Bass pointer"s tuning.
 func (b *Bass) Fretboard() Fretboard {
 	return b.fretBoard
 }
@@ -200,24 +201,24 @@ func (b *Bass) NumOfStrings() int {
 // returns a pointer to a guitar with a standard tuning by default.
 func newBass() *Bass {
 	return &Bass{fretBoard: Fretboard{
-		'E': openPlayerString,
-		'a': openPlayerString,
-		'd': openPlayerString,
-		'g': openPlayerString,
+		"E": openPlayerString,
+		"a": openPlayerString,
+		"d": openPlayerString,
+		"g": openPlayerString,
 	},
-		order:        TuningOrder{'g', 'd', 'a', 'E'},
+		order:        TuningOrder{"g", "d", "a", "E"},
 		numOfStrings: 4,
 	}
 }
 
 func newUkulele() *Ukulele {
 	return &Ukulele{fretBoard: Fretboard{
-		'G': openPlayerString,
-		'c': openPlayerString,
-		'e': openPlayerString,
-		'a': openPlayerString,
+		"G": openPlayerString,
+		"c": openPlayerString,
+		"e": openPlayerString,
+		"a": openPlayerString,
 	},
-		order:        TuningOrder{'a', 'e', 'c', 'G'},
+		order:        TuningOrder{"a", "e", "c", "G"},
 		numOfStrings: 4,
 	}
 }
@@ -225,14 +226,14 @@ func newUkulele() *Ukulele {
 // returns a pointer to a guitar with a standard tuning by default.
 func newLapSteel() *LapSteel {
 	return &LapSteel{fretBoard: Fretboard{
-		'C': openPlayerString,
-		'E': openPlayerString,
-		'g': openPlayerString,
-		'a': openPlayerString,
-		'c': openPlayerString,
-		'e': openPlayerString,
+		"C": openPlayerString,
+		"E": openPlayerString,
+		"g": openPlayerString,
+		"a": openPlayerString,
+		"c": openPlayerString,
+		"e": openPlayerString,
 	},
-		order:        TuningOrder{'e', 'c', 'a', 'g', 'E', 'C'},
+		order:        TuningOrder{"e", "c", "a", "g", "E", "C"},
 		numOfStrings: 6,
 	}
 }
@@ -240,7 +241,7 @@ func newLapSteel() *LapSteel {
 // Tune updates the tuning configuration of the current Ukulele.  The order of the strings will also be the order in which the
 // tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
 // as the count of the input.
-func (u *Ukulele) Tune(tuning string) error {
+func (u *Ukulele) Tune(tuning []string) error {
 	for _, v := range tuning {
 		if ok := validMusicNote(v); !ok {
 			return errors.New("one or more of the note provided in the requested tuning is invalid")
@@ -253,7 +254,7 @@ func (u *Ukulele) Tune(tuning string) error {
 	return nil
 }
 
-// Fretboard returns the current map which represents the Ululele pointer's tuning.
+// Fretboard returns the current map which represents the Ululele pointer"s tuning.
 func (u *Ukulele) Fretboard() Fretboard {
 	return u.fretBoard
 }
@@ -270,15 +271,15 @@ func (u *Ukulele) Order() TuningOrder {
 
 func newGuitarSeven() *GuitarSeven {
 	return &GuitarSeven{fretBoard: Fretboard{
-		'B': openPlayerString,
-		'E': openPlayerString,
-		'a': openPlayerString,
-		'd': openPlayerString,
-		'g': openPlayerString,
-		'b': openPlayerString,
-		'e': openPlayerString,
+		"B": openPlayerString,
+		"E": openPlayerString,
+		"a": openPlayerString,
+		"d": openPlayerString,
+		"g": openPlayerString,
+		"b": openPlayerString,
+		"e": openPlayerString,
 	},
-		order:        TuningOrder{'e', 'b', 'g', 'd', 'a', 'E', 'B'},
+		order:        TuningOrder{"e", "b", "g", "d", "a", "E", "B"},
 		numOfStrings: 7,
 	}
 }
@@ -286,7 +287,7 @@ func newGuitarSeven() *GuitarSeven {
 // Tune updates the tuning configuration of the current Seven-string guitar.  The order of the strings will also be the order in which the
 // tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
 // as the count of the input.
-func (gs *GuitarSeven) Tune(tuning string) error {
+func (gs *GuitarSeven) Tune(tuning []string) error {
 	for _, v := range tuning {
 		if ok := validMusicNote(v); !ok {
 			return errors.New("one or more of the note provided in the requested tuning is invalid")
@@ -299,7 +300,7 @@ func (gs *GuitarSeven) Tune(tuning string) error {
 	return nil
 }
 
-// Fretboard returns the current map which represents the seven string guitar pointer's tuning.
+// Fretboard returns the current map which represents the seven string guitar pointer"s tuning.
 func (gs *GuitarSeven) Fretboard() Fretboard {
 	return gs.fretBoard
 }
@@ -316,12 +317,12 @@ func (gs *GuitarSeven) NumOfStrings() int {
 
 func newMandolin() *Mandolin {
 	return &Mandolin{fretBoard: Fretboard{
-		'G': openPlayerString,
-		'd': openPlayerString,
-		'a': openPlayerString,
-		'e': openPlayerString,
+		"G": openPlayerString,
+		"d": openPlayerString,
+		"a": openPlayerString,
+		"e": openPlayerString,
 	},
-		order:        TuningOrder{'e', 'a', 'd', 'G'},
+		order:        TuningOrder{"e", "a", "d", "G"},
 		numOfStrings: 4,
 	}
 }
@@ -329,7 +330,7 @@ func newMandolin() *Mandolin {
 // Tune updates the tuning configuration of the current mandolin.  The order of the strings will also be the order in which the
 // tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
 // as the count of the input.
-func (m *Mandolin) Tune(tuning string) error {
+func (m *Mandolin) Tune(tuning []string) error {
 	for _, v := range tuning {
 		if ok := validMusicNote(v); !ok {
 			return errors.New("one or more of the note provided in the requested tuning is invalid")
@@ -342,7 +343,7 @@ func (m *Mandolin) Tune(tuning string) error {
 	return nil
 }
 
-// Fretboard returns the current map which represents the mandolin pointer's tuning.
+// Fretboard returns the current map which represents the mandolin pointer"s tuning.
 func (m *Mandolin) Fretboard() Fretboard {
 	return m.fretBoard
 }
@@ -359,18 +360,18 @@ func (m *Mandolin) NumOfStrings() int {
 
 func newBassFive() *BassFive {
 	return &BassFive{fretBoard: Fretboard{
-		'B': openPlayerString,
-		'E': openPlayerString,
-		'a': openPlayerString,
-		'd': openPlayerString,
-		'g': openPlayerString,
+		"B": openPlayerString,
+		"E": openPlayerString,
+		"a": openPlayerString,
+		"d": openPlayerString,
+		"g": openPlayerString,
 	},
-		order:        TuningOrder{'g', 'd', 'a', 'E', 'B'},
+		order:        TuningOrder{"g", "d", "a", "E", "B"},
 		numOfStrings: 5,
 	}
 }
 
-// Fretboard returns the current map which represents the 5 string bass pointer's tuning.
+// Fretboard returns the current map which represents the 5 string bass pointer"s tuning.
 func (bf *BassFive) Fretboard() Fretboard {
 	return bf.fretBoard
 }
@@ -388,7 +389,7 @@ func (bf *BassFive) NumOfStrings() int {
 // Tune updates the tuning configuration of the current 5 string bass.  The order of the strings will also be the order in which the
 // tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
 // as the count of the input.
-func (bf *BassFive) Tune(tuning string) error {
+func (bf *BassFive) Tune(tuning []string) error {
 	for _, v := range tuning {
 		if ok := validMusicNote(v); !ok {
 			return errors.New("one or more of the note provided in the requested tuning is invalid")
@@ -404,7 +405,7 @@ func (bf *BassFive) Tune(tuning string) error {
 // Tune updates the tuning configuration of the current lap steel guitar.  The order of the strings will also be the order in which the
 // tuning was input to Tune().  Validation of the input will occur to make sure that the number of instrument strings is the same
 // as the count of the input.
-func (l *LapSteel) Tune(tuning string) error {
+func (l *LapSteel) Tune(tuning []string) error {
 	for _, v := range tuning {
 		if ok := validMusicNote(v); !ok {
 			return errors.New("one or more of the note provided in the requested tuning is invalid")
@@ -444,7 +445,7 @@ func StringifyCurrentTab(i Instrument) string {
 }
 
 // UpdateCurrentTab accepts the guitarString and fret to be updated on the Instrument.
-func UpdateCurrentTab(i Instrument, instrumentString byte, fret string) {
+func UpdateCurrentTab(i Instrument, instrumentString string, fret string) {
 	switch len(fret) {
 	case 1:
 		if fret == "0" {
@@ -460,12 +461,8 @@ func UpdateCurrentTab(i Instrument, instrumentString byte, fret string) {
 	return
 }
 
-func validMusicNote(note rune) bool {
-	return 'a' <= note && note <= 'g' || 'A' <= note && note <= 'G'
-}
-
-func validCount(i Instrument, s string) bool {
-	return i.NumOfStrings() == len(s)
+func validCount(i Instrument, tuning []string) bool {
+	return i.NumOfStrings() == len(tuning)
 }
 
 // validates that the fret number is numeric
@@ -478,7 +475,7 @@ func validFretCount(s string) bool {
 	return true
 }
 
-func tuningLengthError(i Instrument, tuning string) string {
+func tuningLengthError(i Instrument, tuning []string) string {
 	return fmt.Sprintf("attempted to reconfigure the %s with %d strings which does not match the allowed %d number of strings",
 		reflect.TypeOf(i),
 		len(tuning),
@@ -488,25 +485,21 @@ func tuningLengthError(i Instrument, tuning string) string {
 // TODO(guitarbum722) define more valid characters such as hammer-ons, pull-offs and dead string 2017-04-15T18:00 4
 
 // ParseFingerBoard validates input for the next tab fingering, validates it and returns the parsed values.
-func ParseFingerBoard(i string) (byte, string, error) {
+// The string and the fret number must be separated by a colon (:)
+func ParseFingerBoard(i string) (string, string, error) {
 
-	var instrumentString byte
-
-	// Guitar string number plus frets should not be less than 2 and not more than 3 characters in length.  This allots for up to 99 frets.
-	if len(i) < 2 || len(i) > 4 {
-		return 0, "-", errors.New("invalid entry: make sure the format is [string#][fret#] and the fret number is <= 999")
+	entry := strings.Split(i, ":")
+	if len(entry) > 2 {
+		return "", "-", errors.New("invalid entry: make sure the format is [string#]:[fret#] and the fret number is <= 999")
 	}
 
-	if !validMusicNote(rune(i[0])) {
-		return 0, "-", errors.New("invalid entry: make sure the string is a valid music note")
+	if !validMusicNote(entry[0]) {
+		return "", "-", errors.New("invalid entry: make sure the string is a valid music note")
 	}
 
-	if !validFretCount(i[1:]) {
-		return 0, "-", errors.New("invalid entry: make sure the fret number is numeric")
+	if !validFretCount(entry[1]) {
+		return "", "-", errors.New("invalid entry: make sure the fret number is numeric")
 	}
 
-	instrumentString = i[0]
-	fret := i[1:]
-
-	return instrumentString, fret, nil
+	return entry[0], entry[1], nil
 }
