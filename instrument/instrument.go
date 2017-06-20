@@ -497,6 +497,10 @@ func ParseFingerBoard(i string) (string, string, error) {
 		return "", "-", errors.New("invalid entry: make sure the string is a valid music note")
 	}
 
+	if len(entry[1]) > 3 {
+		return "", "-", errors.New("invalid entry: fret cannot be more than 999")
+	}
+
 	if !validFretCount(entry[1]) {
 		return "", "-", errors.New("invalid entry: make sure the fret number is numeric")
 	}

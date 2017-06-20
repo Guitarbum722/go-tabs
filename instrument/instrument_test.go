@@ -77,6 +77,6 @@ func BenchmarkUpdateCurrentTab(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		UpdateCurrentTab(player, 'E', "22")
+		UpdateCurrentTab(player, "E", "22")
 	}
 }
