@@ -2,9 +2,10 @@ package tabio
 
 import (
 	"bufio"
+	"io"
+
 	"github.com/Guitarbum722/go-tabs/instrument"
 	"github.com/pkg/errors"
-	"io"
 )
 
 // TablatureWriter embeds a buffered writer
