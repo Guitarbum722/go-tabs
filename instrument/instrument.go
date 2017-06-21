@@ -7,13 +7,14 @@ import (
 	"strings"
 )
 
+// These can be used in the call to Tune() or exporting/displaying the tablature
 const (
-	musicFlat        = "\u266D"
-	musicSharp       = "\u266F"
-	openPlayerString = "---"
-
-	testVersion = 2
+	MusicFlat  = "\u266D"
+	MusicSharp = "\u266F"
 )
+
+const openPlayerString = "---"
+const testVersion = 2
 
 // Instrument defines behavior that is common across the instruments used in this package, such as setting the tuning.
 type Instrument interface {
@@ -431,17 +432,6 @@ func (l *LapSteel) Order() TuningOrder {
 // NumOfStrings returns the number of strings that the instrument has.
 func (l *LapSteel) NumOfStrings() int {
 	return l.numOfStrings
-}
-
-// StringifyCurrentTab converts the current fretBoard configuration to a string.
-func StringifyCurrentTab(i Instrument) string {
-	orderOfStrings := i.Order()
-	fretBoard := i.Fretboard()
-	var result string
-	for _, v := range orderOfStrings {
-		result += fmt.Sprintf("%s : %s\n", string(v), fretBoard[v])
-	}
-	return result
 }
 
 // UpdateCurrentTab accepts the guitarString and fret to be updated on the Instrument.

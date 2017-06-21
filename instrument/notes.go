@@ -44,7 +44,7 @@ func validMusicNote(note string) bool {
 		return true
 	case "A♯":
 		return true
-	case "B♭♯":
+	case "B♭":
 		return true
 	case "B":
 		return true

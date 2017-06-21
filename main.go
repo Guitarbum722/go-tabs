@@ -60,10 +60,12 @@ func main() {
 		log.Printf("Your choice of %v is not valid.\n", userChoice)
 		os.Exit(1)
 	}
+	// player = instrument.NewInstrument(guitar)
+	// player.Tune([]string{"C", "A♭", "D♭", "G♭", "B♭", "e♭"})
 
 	fmt.Println("Enter the string, then fret number (ie e7 or g2)")
 	fmt.Println("****************")
-	fmt.Print(instrument.StringifyCurrentTab(player))
+	fmt.Print(tabio.StringifyCurrentTab(player))
 
 	f, err := os.OpenFile("guitar_tab.txt", os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
@@ -81,7 +83,7 @@ func main() {
 			for k := range player.Fretboard() {
 				instrument.UpdateCurrentTab(player, k, "-")
 			}
-			fmt.Print(instrument.StringifyCurrentTab(player))
+			fmt.Print(tabio.StringifyCurrentTab(player))
 		case "export":
 			if err := tabio.ExportTablature(player, w); err != nil {
 				log.Fatalf("there was an error exporting the tablature::: %s\n", err)
@@ -91,6 +93,16 @@ func main() {
 			}
 		case "quit":
 			z++
+		case "tune":
+			fmt.Println("Please enter the desired tuning with each note separated by colons (:)")
+			tuning, err := reader.ReadString('\n')
+			if err != nil {
+				log.Fatalf("there was an error tuning the instrument::: %s", err)
+			}
+			tuning = strings.TrimRight(tuning, "\n")
+			player.Tune(strings.Split(tuning, ":"))
+
+			fmt.Print(tabio.StringifyCurrentTab(player))
 		default:
 			guitarString, fret, err := instrument.ParseFingerBoard(input)
 			if err != nil {
@@ -98,7 +110,7 @@ func main() {
 			} else {
 				instrument.UpdateCurrentTab(player, guitarString, fret)
 			}
-			fmt.Print(instrument.StringifyCurrentTab(player))
+			fmt.Print(tabio.StringifyCurrentTab(player))
 		}
 	}
 	if err := f.Close(); err != nil {
