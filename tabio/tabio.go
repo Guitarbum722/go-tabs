@@ -2,9 +2,15 @@ package tabio
 
 import (
 	"bufio"
+	"io"
+
 	"github.com/Guitarbum722/go-tabs/instrument"
 	"github.com/pkg/errors"
-	"io"
+)
+
+const (
+	labelSeparator = " : "
+	newLine        = "\n"
 )
 
 // TablatureWriter embeds a buffered writer
@@ -18,7 +24,7 @@ type TablatureWriter struct {
 }
 
 type tablatureBuilder struct {
-	builder map[byte][]byte
+	builder map[string][]byte
 }
 
 // UpdateWrapPosition will update the wrapPosition of the TablatureWriter
@@ -41,7 +47,7 @@ func NewTablatureWriter(w io.Writer, pos int) *TablatureWriter {
 		pos,
 		0,
 		tablatureBuilder{
-			make(map[byte][]byte),
+			make(map[string][]byte),
 		},
 	}
 }
@@ -50,9 +56,7 @@ func NewTablatureWriter(w io.Writer, pos int) *TablatureWriter {
 // The purpose is only to stage or buffer the current tablature but it does not
 // write the tablature to a file.
 func StageTablature(i instrument.Instrument, w *TablatureWriter) {
-
 	for k, v := range i.Fretboard() {
-
 		w.tb.builder[k] = append(w.tb.builder[k], []byte(v)...)
 		w.totalLength = len(w.tb.builder[k])
 	}
@@ -62,14 +66,10 @@ func StageTablature(i instrument.Instrument, w *TablatureWriter) {
 
 // ExportTablature will flush the bufferred writer to the io.Writer of which it was initialized
 func ExportTablature(i instrument.Instrument, w *TablatureWriter) error {
-
 	var done int
-
 	for ; done < w.totalLength; done += w.wrapPosition {
-
 		for _, v := range i.Order() {
-
-			w.Write([]byte{v, ':', ' '})
+			w.WriteString(padLabel(v) + labelSeparator)
 
 			if (done + w.wrapPosition) < w.totalLength {
 				if _, err := w.Write(w.tb.builder[v][done:(done + w.wrapPosition)]); err != nil {
@@ -88,4 +88,22 @@ func ExportTablature(i instrument.Instrument, w *TablatureWriter) error {
 	w.Flush()
 
 	return nil
+}
+
+// StringifyCurrentTab converts the current fretBoard configuration to a string.
+func StringifyCurrentTab(i instrument.Instrument) string {
+	orderOfStrings := i.Order()
+	fretBoard := i.Fretboard()
+	var result string
+	for _, v := range orderOfStrings {
+		result += padLabel(v) + labelSeparator + fretBoard[v] + newLine
+	}
+	return result
+}
+
+func padLabel(s string) string {
+	for len(s) < 2 {
+		s += " "
+	}
+	return s
 }
