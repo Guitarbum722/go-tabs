@@ -2,11 +2,15 @@ package tabio
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 
 	"github.com/Guitarbum722/go-tabs/instrument"
 	"github.com/pkg/errors"
+)
+
+const (
+	labelSeparator = " : "
+	newLine        = "\n"
 )
 
 // TablatureWriter embeds a buffered writer
@@ -65,7 +69,7 @@ func ExportTablature(i instrument.Instrument, w *TablatureWriter) error {
 	var done int
 	for ; done < w.totalLength; done += w.wrapPosition {
 		for _, v := range i.Order() {
-			w.WriteString(padLabel(v) + ":" + " ")
+			w.WriteString(padLabel(v) + labelSeparator)
 
 			if (done + w.wrapPosition) < w.totalLength {
 				if _, err := w.Write(w.tb.builder[v][done:(done + w.wrapPosition)]); err != nil {
@@ -92,7 +96,7 @@ func StringifyCurrentTab(i instrument.Instrument) string {
 	fretBoard := i.Fretboard()
 	var result string
 	for _, v := range orderOfStrings {
-		result += fmt.Sprintf("%v : %v\n", padLabel(v), fretBoard[v])
+		result += padLabel(v) + labelSeparator + fretBoard[v] + newLine
 	}
 	return result
 }
