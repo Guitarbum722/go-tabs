@@ -25,7 +25,7 @@ const (
 	HighB      = "b"
 	HighC      = "c"
 	HighCSharp = "c♯"
-	HighDflat  = "d♭"
+	HighDFlat  = "d♭"
 	HighD      = "d"
 	HighDSharp = "d♯"
 	HighEFlat  = "e♭"
