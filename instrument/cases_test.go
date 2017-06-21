@@ -130,41 +130,63 @@ var tuneCases = []struct {
 		[]string{"D", "a", "d", "g", "b", "e", "A"},
 		true,
 	},
+	{
+		"bass",
+		[]string{"D♭", "a♭", "d♭", "g♭"},
+		false,
+	},
+	{
+		"bass",
+		[]string{"D", "a", "d", "f♭"},
+		true,
+	},
 }
 
 var parseFingerBoardCases = []struct {
 	input            string
-	instrumentString byte
+	instrumentString string
 	fret             string
 	wantErr          bool
 }{
 	{
+		"f♭:0",
+		"f♭",
+		"0",
+		true,
+	},
+	{
+		"a♭:0",
+		"a♭",
+		"0",
+		false,
+	},
+	{
 		"a:0",
-		'a',
+		"a",
 		"0",
 		false,
 	},
 	{
 		"a:1",
-		'a',
+		"a",
 		"1",
 		false,
 	},
 	{
 		"E:12",
-		'E',
+		"E",
 		"12",
 		false,
 	},
 	{
 		"z:10",
-		0,
+		"",
 		"-",
 		true,
 	},
 	{
 		"D:2222",
-		0,
+		"",
 		"-",
 		true,
 	},
