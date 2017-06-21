@@ -81,9 +81,9 @@ E: -------------------------------
 w.UpdateWrapPosition(110) // if input is less than 20, the default is 20
 ```
 
-Enter an instrument's string and the fret number.  Example [ E12 ] or [ a7 ]
+Enter an instrument's string and the fret number.  Example [ E:12 ] or [ a♭:7 ]
 ```go
-	guitarString, fret, err := instrument.ParseFingerBoard(input) // (input == "E12") && true == true
+	guitarString, fret, err := instrument.ParseFingerBoard(input) // (input == "E:12")
 	if err != nil {
 		log.Printf("invalid entry: %s", err)
 	} else {
@@ -139,15 +139,15 @@ if err := player.Tune("Dadgbe"); err != nil {
 #### Current instruments supported
 
 
-| Instrument       | Strings | Default Tuning | NewInstrument(s string) |
-| :---------       | :-------: | :-------------: | :---- |
-| Guitar           | 6       | Eadgbe         | guitar |
-| Bass Guitar      | 4       | Eadg           | bass |
-| Ukulele          | 4       | Gcea           | ukulele |
-| 7 String Guitar  | 7       | BEadgbe        | guitar-seven|
-| Mandolin         | 4       | Gdea           | mandolin |
-| 5 String Bass    | 5       | BEadg          | bass-five |
-| Lap Steel Guitar | 6      | CEgace         | lap-steel |
+| Instrument       | Strings   | Default Tuning  | NewInstrument(s string) |
+| :---------       | :-------: | :-------------: | :----                   |
+| Guitar           | 6         | Eadgbe          | guitar                  |
+| Bass Guitar      | 4         | Eadg            | bass                    |
+| Ukulele          | 4         | Gcea            | ukulele                 |
+| 7 String Guitar  | 7         | BEadgbe         | guitar-seven            |
+| Mandolin         | 4         | Gdea            | mandolin                |
+| 5 String Bass    | 5         | BEadg           | bass-five               |
+| Lap Steel Guitar | 6         | CEgace          | lap-steel               |
 
 #### Contributing
 
