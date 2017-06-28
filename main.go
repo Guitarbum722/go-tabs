@@ -13,15 +13,6 @@ import (
 	"github.com/Guitarbum722/go-tabs/tabio"
 )
 
-const (
-	guitar      = "guitar"
-	bass        = "bass"
-	ukulele     = "ukulele"
-	guitarSeven = "guitar-seven"
-	mandolin    = "mandolin"
-	bassFive    = "bass-five"
-)
-
 func main() {
 
 	reader := bufio.NewReader(os.Stdin)
@@ -45,17 +36,17 @@ func main() {
 
 	switch userChoice {
 	case "1":
-		player = instrument.NewInstrument(guitar)
+		player = instrument.NewInstrument(instrument.InstGuitar)
 	case "2":
-		player = instrument.NewInstrument(bass)
+		player = instrument.NewInstrument(instrument.InstBass)
 	case "3":
-		player = instrument.NewInstrument(ukulele)
+		player = instrument.NewInstrument(instrument.InstUkulele)
 	case "4":
-		player = instrument.NewInstrument(guitarSeven)
+		player = instrument.NewInstrument(instrument.InstGuitarSeven)
 	case "5":
-		player = instrument.NewInstrument(mandolin)
+		player = instrument.NewInstrument(instrument.InstMandolin)
 	case "6":
-		player = instrument.NewInstrument(bassFive)
+		player = instrument.NewInstrument(instrument.InstBassFive)
 	default:
 		log.Printf("Your choice of %v is not valid.\n", userChoice)
 		os.Exit(1)
