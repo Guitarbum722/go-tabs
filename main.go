@@ -105,8 +105,7 @@ func main() {
 		}
 	}
 	if err := f.Close(); err != nil {
-		log.Printf("error closing the file %s", err)
-		os.Exit(1)
+		log.Fatalf("error closing the file %s", err)
 	}
 	os.Exit(0)
 }
