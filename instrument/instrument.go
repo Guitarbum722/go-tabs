@@ -16,6 +16,16 @@ const (
 const openPlayerString = "---"
 const testVersion = 2
 
+// Convenience constants which can be used to initialize a new Instrument.
+const (
+	InstGuitar      = "guitar"
+	InstBass        = "bass"
+	InstUkulele     = "ukulele"
+	InstGuitarSeven = "guitar-seven"
+	InstMandolin    = "mandolin"
+	InstBassFive    = "bass-five"
+)
+
 // Instrument defines behavior that is common across the instruments used in this package, such as setting the tuning.
 type Instrument interface {
 	Tune(tuning []string) error
